@@ -16,6 +16,7 @@ Input to the function will be:
     "Video Time" : float, //current simulated time that has elapsed since start of video. This includes buffering
     "Chunks Remaining" : int, //number of chunks left in video
     "Rebuffering Time" : float, //amount of time spent buffering since last request
+    
 }
 
 Output:
@@ -26,6 +27,11 @@ Output:
 
 Feel free to comment/change if there are formats that make more sense
 
+Going thru some of the ABR algos some of them use different terms for the same thing. 
+Using your definition above as a based, I will add the equivalencies below. 
+
+Chunk Time = Chunk Size
+Bandwidth*Buffer Ocupancy_current        = download_throughput
 '''
 
 
