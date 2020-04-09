@@ -1,0 +1,15 @@
+{
+	"Measured Bandwidth": "float",
+	"Buffer Occupancy": {
+		"current": "int",
+		"size": "int",
+		"time": "float"
+	},
+	"Chunk Time": "float",
+	"Available Bitrates": [
+		["string", "int"]
+	],
+	"Video Time": "float",
+	"Chunks Remaining": "int",
+	"Rebuffering Time": "float"
+}
