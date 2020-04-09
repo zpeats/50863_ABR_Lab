@@ -6,7 +6,7 @@ Buffer-based (X)  http://yuba.stanford.edu/~nickm/papers/sigcomm2014-video.pdf
 Rate-based (N/A)
 BOLA (a bit involved) https://arxiv.org/pdf/1601.06748.pdf
 MPC (All optimaiztion) https://users.ece.cmu.edu/~vsekar/papers/sigcomm15_mpcdash.pdf
-robustMPC (no Pseudocode https://conferences.sigcomm.org/sigcomm/2015/pdf/papers/p325.pdf)
+robustMPC (no Pseudocode) 
 
 From Practical Evaluation of Rate Adaptation Algorithms Paper:
 file:///C:/Users/natha/Downloads/APracticalEvaluationofRateAdaptationAlgorithmsinHTTP-basedAdaptiveStreaming-Puplished.pdf
