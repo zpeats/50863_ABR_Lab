@@ -13,7 +13,7 @@ Input to the function will be:
         //EXAMPLE: "1440" : 20000000
     },
     "Video Time" : float, //current simulated time that has elapsed since start of video. This includes buffering
-    
+    "Rebuffing Flag": Boolean, // flag stating that was rebuffing from last bitrate decision
     "Rebuffering Time" : float, //amount of time spent buffering since last request
     "Chunk" : {
         "left" : int, ///number of chunks left in video

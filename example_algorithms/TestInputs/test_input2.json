@@ -33,11 +33,13 @@
     ],
     "Video Time": 4.9202,
     "Rebuffering Time": 3.14,
-    "Chuck": {
+    "Rebuffing Flag": true,
+    "Chunk": {
         "left": 4000,
         "size": 20000000,
         "current": 4,
         "time": 2.69
     }
+    
 
 }

@@ -5,32 +5,39 @@ from data_stru import TestInput2,BufferOccupancy
 with open(r'example_algorithms\TestInputs\test_input2.json') as f:
   data = json.load(f)
 
-BufferOccupancy = BufferOccupancy(
+Buffer= BufferOccupancy(
     current = data['Buffer Occupancy']['current'],
     size = data['Buffer Occupancy']['size'],
-    time = data['Buffer Occupancy']['time']
+    time = data['Buffer Occupancy']['time'],
+    left = None 
+)
+Chunk = BufferOccupancy(
+    current = data['Chunk']['current'],
+    size = data['Chunk']['size'],
+    time = data['Chunk']['time'],
+    left = data['Chunk']['left'] 
 )
 
-TestInput = TestInput(
+TestInput = TestInput2(
     measured_bandwidth=data['Measured Bandwidth'],
-    buffer_occupancy = BufferOccupancy,
-    chunk_time = data['Chunk Time'] ,
+    buffer_occupancy = Buffer,
     available_bitrates = data['Available Bitrates'], 
     video_time = data['Video Time'],  
-    chunks_remaining= data['Chunks Remaining'],
-    rebuffering_time = data['Rebuffering Time'] 
+    rebuffering_time = data['Rebuffering Time'],
+    rebuffing_flag = data['Rebuffing Flag'], 
+    chunk = Chunk 
     )
 
 
 
 
 
-
-
-def DASH(n=3, T_low=4, T_rich=20, s=1, B_total=TestInput.buffer_occupancy.current, B_cur, T_elapsed,TH_arr,l,T_grace,C_aba,D):
+def match(value, list_of_list): 
+    for e in list_of_list:
+        if value == e[1]:
+            return e
     '''
     Input: 
-    n = 3: the number of bandwidth estimation samples (3 for VOD)
     T_low = 4: the threshold for deciding that the buffer length is low
     T_rich = 20: the threshold for deciding that the buffer length is sufficient
     s = 1: the step down factor for decreasing the bitrate when the buffer length is low
@@ -42,5 +49,35 @@ def DASH(n=3, T_low=4, T_rich=20, s=1, B_total=TestInput.buffer_occupancy.curren
     T_grace = 0.5: the grace time threshold used in abandon requests rule
     C_aba = 1.8: the constant for the decision of abandoning the segment in abandon requests rule
     D: the segment duration
+    bw: the measured bandwidth of i th transmitted video segment
+    buffer_len: buffer length 
+    rebuffering: flag stating that was rebuffing from last bitrate decision
+    buf_now
     '''
+def DASH(buffer_len = TestInput.buffer_occupancy.size, rebuffering = TestInput.rebuffing_flag ,buf_now=TestInput.buffer_occupancy.current, T_low=4, T_rich=20, R_i = TestInput.available_bitrates):
+    #throughput rule:
+    m = len(R_i)-1
+    if buffer_len >= T_low*2:
+        for k in range(0, m):
+            if buf_now.current >= R_i[k][1]:
+                rate_next = R_i[k][1]
+                break
+    # print(rate_next)
+    
+    #insufficient buffer rule: 
+    if rebuffering:
+        rate_next = R_i[m][1]
+    elif T_low < buffer_len and buffer_len < T_low *2:
+        rate_next = R_i[m][1]
+    
+    #buffer occupany rule: 
+    if buffer_len > T_rich:
+        rate_next = R_i[0][1]
+    
+    return rate_next
 
+
+next_rate = DASH(buffer_len = TestInput.buffer_occupancy.current, rebuffering = TestInput.rebuffing_flag ,buf_now=TestInput.buffer_occupancy, T_low=4, T_rich=20, R_i = TestInput.available_bitrates)
+print(next_rate)
+
+print(match(next_rate,TestInput.available_bitrates)[0])

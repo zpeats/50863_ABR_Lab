@@ -12,10 +12,10 @@ Buffer= BufferOccupancy(
     left = None 
 )
 Chunk = BufferOccupancy(
-    current = data['Chuck']['current'],
-    size = data['Chuck']['size'],
-    time = data['Chuck']['time'],
-    left = data['Chuck']['left'] 
+    current = data['Chunk']['current'],
+    size = data['Chunk']['size'],
+    time = data['Chunk']['time'],
+    left = data['Chunk']['left'] 
 )
 
 TestInput = TestInput2(
@@ -24,8 +24,15 @@ TestInput = TestInput2(
     available_bitrates = data['Available Bitrates'], 
     video_time = data['Video Time'],  
     rebuffering_time = data['Rebuffering Time'],
+    rebuffing_flag = data['Rebuffing Flag'], 
     chunk = Chunk 
     )
+
+
+def match(value, list_of_list): 
+    for e in list_of_list:
+        if value == e[1]:
+            return e
 
 # #print(data)
 # #print(TestInput.buffer_occupancy['time'])
@@ -100,3 +107,4 @@ def bufferbased(rate_prev = 0, buf_now=TestInput.buffer_occupancy, r=TestInput.c
 next_rate =bufferbased(rate_prev = 0, buf_now=TestInput.buffer_occupancy, r=TestInput.chunk.time+1, cu = 126,R_i = TestInput.available_bitrates)
 print(next_rate)
 #print('^true')
+print(match(next_rate,TestInput.available_bitrates)[0])

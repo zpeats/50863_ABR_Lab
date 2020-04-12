@@ -114,7 +114,8 @@ Buffer occupancy rule:
 if Buffer_len > T_rich then
     N_i+1 = Rm
 
-Abandon requests rule (called multiple times for a segment): \\might just switch this
+Abandon requests rule (called multiple times for a segment): \\might just switch this, seems like this looks at the same chuck various times
+\\we don't do that so there's no need to include that 
 
 add B_cur/T_elapsed to TH_arr //TH_arr is an array so append it 
 
