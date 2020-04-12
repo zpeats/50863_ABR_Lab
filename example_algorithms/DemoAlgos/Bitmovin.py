@@ -2,7 +2,7 @@ import json
 from data_stru import TestInput2, BufferOccupancy
 
 
-with open(r'example_algorithms\TestInputs\test_input3.json') as f:
+with open(r'example_algorithms\TestInputs\test_input2.json') as f:
   data = json.load(f)
 
 Buffer= BufferOccupancy(
