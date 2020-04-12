@@ -1,0 +1,15 @@
+{
+	"Measured Bandwidth": 5.05,
+	"Buffer Occupancy": {
+		"current": 4,
+		"size": 6,
+		"time": 4.206
+	},
+	"Chunk Time": 9.69,
+	"Available Bitrates": [
+		["1440", 20000000]
+	],
+	"Video Time": 4.92020,
+	"Chunks Remaining": 3,
+	"Rebuffering Time": 3.14
+}
