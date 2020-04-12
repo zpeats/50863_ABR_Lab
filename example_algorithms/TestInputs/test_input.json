@@ -5,11 +5,18 @@
 		"size": "int",
 		"time": "float"
 	},
-	"Chunk Time": "float",
 	"Available Bitrates": [
 		["string", "int"]
 	],
 	"Video Time": "float",
-	"Chunks Remaining": "int",
-	"Rebuffering Time": "float"
+	"Chunk": {
+        "left": "int",
+        "size": "int",
+        "current": "int",
+        "time": "float"
+    },
+	"Rebuffering Time": "float",
+	"Rebuffing Flag": "boolean",
+	"Previous Bitrate":["string", "int"],
+    "Preferred Bitrate":"string"
 }
