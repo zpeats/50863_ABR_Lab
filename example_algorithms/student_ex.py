@@ -21,6 +21,9 @@ Input to the function will be:
         "current" : int, //the total received bytes up to now for chuck
         "time": float, //number of second of video next chunk represents  
         }
+    "Previous Bitrate" //["0",0] if there was was no previous, same as suggested bitrate
+    "Preferred Bitrate " //Bitrate selected by user 
+
 }
 
 Output:

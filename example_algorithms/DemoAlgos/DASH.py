@@ -29,37 +29,26 @@ TestInput = TestInput2(
     )
 
 
-
-
-
 def match(value, list_of_list): 
     for e in list_of_list:
         if value == e[1]:
             return e
+
+def DASH(buffer_len = TestInput.buffer_occupancy.size, rebuffering = TestInput.rebuffing_flag ,buf_now=TestInput.buffer_occupancy.current, T_low=4, T_rich=20, R_i = TestInput.available_bitrates):
     '''
     Input: 
     T_low = 4: the threshold for deciding that the buffer length is low
     T_rich = 20: the threshold for deciding that the buffer length is sufficient
-    s = 1: the step down factor for decreasing the bitrate when the buffer length is low
-    B_total: the total bytes for segment (or chunk) i
-    B_cur:  the total received bytes up to now for segment i
-    T_elapsed: the elapsed time from the download of first byte for segment i
-    TH_arr: the throughput array used in abandon requests rule (in bps)
-    l = 5: the minimum length to average the throughput in Abandon requests rule
-    T_grace = 0.5: the grace time threshold used in abandon requests rule
-    C_aba = 1.8: the constant for the decision of abandoning the segment in abandon requests rule
-    D: the segment duration
-    bw: the measured bandwidth of i th transmitted video segment
     buffer_len: buffer length 
     rebuffering: flag stating that was rebuffing from last bitrate decision
-    buf_now
+    buf_now: number of bytes occupied in the buffer
+    R_i: Array of bitrates of videos, key will be bitrate, and value will be the byte size of the chunk
     '''
-def DASH(buffer_len = TestInput.buffer_occupancy.size, rebuffering = TestInput.rebuffing_flag ,buf_now=TestInput.buffer_occupancy.current, T_low=4, T_rich=20, R_i = TestInput.available_bitrates):
     #throughput rule:
     m = len(R_i)-1
     if buffer_len >= T_low*2:
         for k in range(0, m):
-            if buf_now.current >= R_i[k][1]:
+            if buf_now >= R_i[k][1]:
                 rate_next = R_i[k][1]
                 break
     # print(rate_next)
@@ -77,7 +66,7 @@ def DASH(buffer_len = TestInput.buffer_occupancy.size, rebuffering = TestInput.r
     return rate_next
 
 
-next_rate = DASH(buffer_len = TestInput.buffer_occupancy.current, rebuffering = TestInput.rebuffing_flag ,buf_now=TestInput.buffer_occupancy, T_low=4, T_rich=20, R_i = TestInput.available_bitrates)
+next_rate = DASH(buffer_len = TestInput.buffer_occupancy.size, rebuffering = TestInput.rebuffing_flag ,buf_now=TestInput.buffer_occupancy.current, T_low=4, T_rich=20, R_i = TestInput.available_bitrates)
 print(next_rate)
 
 print(match(next_rate,TestInput.available_bitrates)[0])

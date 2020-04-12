@@ -138,14 +138,14 @@ return N_i+1 // added by me
 Bitmovin Player //uses rate-based 
 
 
-Preferred startup switching:
+//Preferred startup switching:
 t: the time passed from start (assuming in sec)
 s: the index of the rate suggested by other switching methods
 R_pre: the preferred startup rate
 
 
 if t < 10 then
-    for k ← m to 1 do
+    for k ← m to 1 do //highest to lowest where m is highest and 1 is lowest
         if k = s then
             return Ni+1 = Rs
         if Rk <= R_pre then
@@ -154,7 +154,7 @@ if t < 10 then
 else
     return Ni+1 = Rs
 
-Rate based switching:
+//Rate based switching:
 
 // Bandwidth estimation update:
 depth: the number of downloaded segments to use for bandwidth estimation
