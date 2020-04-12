@@ -25,7 +25,9 @@ TestInput = TestInput2(
     video_time = data['Video Time'],  
     rebuffering_time = data['Rebuffering Time'],
     rebuffing_flag = data['Rebuffing Flag'], 
-    chunk = Chunk 
+    chunk = Chunk, 
+    previous_bitrate = data["Previous Bitrate"],
+    preferred_bitrate = data["Preferred Bitrate"]
     )
 
 
@@ -34,9 +36,6 @@ def match(value, list_of_list):
         if value == e[1]:
             return e
 
-# #print(data)
-# #print(TestInput.buffer_occupancy['time'])
-# #print(TestInput.buffer_occupancy.time)
 
 def bufferbased(rate_prev = 0, buf_now=TestInput.buffer_occupancy, r=TestInput.chunk.time+1, cu = 126,R_i = TestInput.available_bitrates):
     '''
@@ -45,6 +44,8 @@ def bufferbased(rate_prev = 0, buf_now=TestInput.buffer_occupancy, r=TestInput.c
     Buf_now: The current buffer occupancy //we got that
     r: The size of reservoir  //At least great than Chunk Time
     cu: The size of cushion //between 90 to 216, paper used 126
+    R_i: Array of bitrates of videos, key will be bitrate, and value will be the byte size of the chunk
+    
     Output: 
     Rate_next: The next video rate
     '''
@@ -105,6 +106,6 @@ def bufferbased(rate_prev = 0, buf_now=TestInput.buffer_occupancy, r=TestInput.c
     return rate_next
 
 next_rate =bufferbased(rate_prev = 0, buf_now=TestInput.buffer_occupancy, r=TestInput.chunk.time+1, cu = 126,R_i = TestInput.available_bitrates)
-print(next_rate)
+# print(next_rate)
 #print('^true')
 print(match(next_rate,TestInput.available_bitrates)[0])

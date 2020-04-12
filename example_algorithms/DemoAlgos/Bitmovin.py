@@ -2,7 +2,7 @@ import json
 from data_stru import TestInput2, BufferOccupancy
 
 
-with open(r'example_algorithms\TestInputs\test_input2.json') as f:
+with open(r'example_algorithms\TestInputs\test_input3.json') as f:
   data = json.load(f)
 
 Buffer= BufferOccupancy(
@@ -25,7 +25,9 @@ TestInput = TestInput2(
     video_time = data['Video Time'],  
     rebuffering_time = data['Rebuffering Time'],
     rebuffing_flag = data['Rebuffing Flag'], 
-    chunk = Chunk 
+    chunk = Chunk,
+    previous_bitrate = data["Previous Bitrate"],
+    preferred_bitrate = data["Preferred Bitrate"] 
     )
 
 
@@ -35,10 +37,22 @@ def match(value, list_of_list):
             return e
 
 
-def bitmovin(time =9 , rate_sug ="720p" , rate_pref ="1080p" , R_i = TestInput.available_bitrates, buf_now=TestInput.buffer_occupancy.current):
+def bitmovin(time =TestInput.video_time , rate_sug =TestInput.previous_bitrate[0] , rate_pref =TestInput.preferred_bitrate , R_i = TestInput.available_bitrates, buf_now=TestInput.buffer_occupancy.current):
+    '''
+    Input: 
+    time: the time passed from start (assuming in sec)
+    rate_sug: the rate suggested by other switching methods, if at start this is 0p
+    R_pre: the preferred startup rate
+    buf_now: number of bytes occupied in the buffer
+    R_i: Array of bitrates of videos, key will be bitrate, and value will be the byte size of the chunk
+    
+    Output: 
+    Rate_next: The next video rate
+    '''
+    
     m = len(R_i)-1
-    def perfstartup(time, rate_sug, rate_pref, R_i = TestInput.available_bitrates, m =m ):
-        # m = len(R_i)-1
+    #Preferred Startup Switching
+    def perfstartup(time = time, rate_sug = rate_sug, rate_pref = rate_pref, R_i = TestInput.available_bitrates, m =m ):
         s = match(rate_sug,R_i)
         p = match(rate_pref,R_i)
         if time < 10:
@@ -55,9 +69,7 @@ def bitmovin(time =9 , rate_sug ="720p" , rate_pref ="1080p" , R_i = TestInput.a
             rate_next = s[1]
             return rate_next
     rate_next = perfstartup(time, rate_sug, rate_pref, R_i = TestInput.available_bitrates)
-
-    # R_max = match(max(i[1] for i in R_i),R_i)
-    # R_min = match(min(i[1] for i in R_i),R_i)
+    #Rate based Swtiching
     R_min = float("inf")
     R_max = 0
     for k in range(m,0,-1):
@@ -75,3 +87,4 @@ next_rate = bitmovin(time =9 , rate_sug ="720p" , rate_pref ="1080p" , R_i = Tes
 print(next_rate)
 
 
+print(match(next_rate,TestInput.available_bitrates)[0])

@@ -25,7 +25,9 @@ TestInput = TestInput2(
     video_time = data['Video Time'],  
     rebuffering_time = data['Rebuffering Time'],
     rebuffing_flag = data['Rebuffing Flag'], 
-    chunk = Chunk 
+    chunk = Chunk,
+    previous_bitrate = data["Previous Bitrate"],
+    preferred_bitrate = data["Preferred Bitrate"] 
     )
 
 
@@ -43,6 +45,9 @@ def DASH(buffer_len = TestInput.buffer_occupancy.size, rebuffering = TestInput.r
     rebuffering: flag stating that was rebuffing from last bitrate decision
     buf_now: number of bytes occupied in the buffer
     R_i: Array of bitrates of videos, key will be bitrate, and value will be the byte size of the chunk
+    
+    Output: 
+    Rate_next: The next video rate
     '''
     #throughput rule:
     m = len(R_i)-1
@@ -52,17 +57,21 @@ def DASH(buffer_len = TestInput.buffer_occupancy.size, rebuffering = TestInput.r
                 rate_next = R_i[k][1]
                 break
     # print(rate_next)
+    # print('^1st')
     
     #insufficient buffer rule: 
     if rebuffering:
         rate_next = R_i[m][1]
     elif T_low < buffer_len and buffer_len < T_low *2:
         rate_next = R_i[m][1]
+    # print(rate_next)
+    # print('^2nd')
     
-    #buffer occupany rule: 
-    if buffer_len > T_rich:
-        rate_next = R_i[0][1]
-    
+    # #buffer occupany rule: 
+    # if buffer_len > T_rich:
+    #     rate_next = R_i[0][1]
+    # print(rate_next)
+    # print('^last')
     return rate_next
 
 
