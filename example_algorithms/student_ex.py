@@ -8,15 +8,19 @@ Input to the function will be:
         "size" : int, //max buffer size
         "time" : float, //how much video time the occupied buffer represents
         },
-    "Chunk Time" : float, //number of second of video next chunk represents
     "Available Bitrates" : { 
         <string, int> //dynamically packed, key will be bitrate, and value will be the byte size of the chunk. See example below
         //EXAMPLE: "1440" : 20000000
     },
     "Video Time" : float, //current simulated time that has elapsed since start of video. This includes buffering
-    "Chunks Remaining" : int, //number of chunks left in video
-    "Rebuffering Time" : float, //amount of time spent buffering since last request
     
+    "Rebuffering Time" : float, //amount of time spent buffering since last request
+    "Chunk" : {
+        "left" : int, ///number of chunks left in video
+        "size" : int, //the total bytes for chunk (or segment) 
+        "current" : int, //the total received bytes up to now for chuck
+        "time": float, //number of second of video next chunk represents  
+        }
 }
 
 Output:

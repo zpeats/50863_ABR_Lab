@@ -5,7 +5,6 @@
         "size": 20000000,
         "time": 4.206
     },
-    "Chunk Time": 2.69,
     "Available Bitrates": [
         [
             "1440p",
@@ -33,6 +32,12 @@
         ]
     ],
     "Video Time": 4.9202,
-    "Chunks Remaining": 3,
-    "Rebuffering Time": 3.14
+    "Rebuffering Time": 3.14,
+    "Chuck": {
+        "left": 4000,
+        "size": 20000000,
+        "current": 4,
+        "time": 2.69
+    }
+
 }

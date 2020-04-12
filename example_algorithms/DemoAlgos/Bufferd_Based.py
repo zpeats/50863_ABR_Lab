@@ -1,31 +1,48 @@
 import json
-from data_stru import TestInput,BufferOccupancy
+from data_stru import TestInput2, BufferOccupancy
 
 
 with open(r'example_algorithms\TestInputs\test_input2.json') as f:
   data = json.load(f)
 
-BufferOccupancy = BufferOccupancy(
+Buffer= BufferOccupancy(
     current = data['Buffer Occupancy']['current'],
     size = data['Buffer Occupancy']['size'],
-    time = data['Buffer Occupancy']['time']
+    time = data['Buffer Occupancy']['time'],
+    left = None 
+)
+Chunk = BufferOccupancy(
+    current = data['Chuck']['current'],
+    size = data['Chuck']['size'],
+    time = data['Chuck']['time'],
+    left = data['Chuck']['left'] 
 )
 
-TestInput = TestInput(
+TestInput = TestInput2(
     measured_bandwidth=data['Measured Bandwidth'],
-    buffer_occupancy = BufferOccupancy,
-    chunk_time = data['Chunk Time'] ,
+    buffer_occupancy = Buffer,
     available_bitrates = data['Available Bitrates'], 
     video_time = data['Video Time'],  
-    chunks_remaining= data['Chunks Remaining'],
-    rebuffering_time = data['Rebuffering Time'] 
+    rebuffering_time = data['Rebuffering Time'],
+    chunk = Chunk 
     )
 
 # #print(data)
 # #print(TestInput.buffer_occupancy['time'])
 # #print(TestInput.buffer_occupancy.time)
 
-def bufferbased(rate_prev = 0, buf_now=TestInput.buffer_occupancy, r=TestInput.chunk_time+1, cu = 126,R_i = TestInput.available_bitrates):
+def bufferbased(rate_prev = 0, buf_now=TestInput.buffer_occupancy, r=TestInput.chunk.time+1, cu = 126,R_i = TestInput.available_bitrates):
+    '''
+    Input: 
+    Rate_prev: The previously used video rate //could have it be internal parameter that they pass via arg
+    Buf_now: The current buffer occupancy //we got that
+    r: The size of reservoir  //At least great than Chunk Time
+    cu: The size of cushion //between 90 to 216, paper used 126
+    Output: 
+    Rate_next: The next video rate
+    '''
+    
+    
     R_max = max(i[1] for i in R_i)
     R_min = min(i[1] for i in R_i)
 
@@ -80,6 +97,6 @@ def bufferbased(rate_prev = 0, buf_now=TestInput.buffer_occupancy, r=TestInput.c
         #print('^last')
     return rate_next
 
-next_rate =bufferbased(rate_prev = 0, buf_now=TestInput.buffer_occupancy, r=TestInput.chunk_time+1, cu = 126,R_i = TestInput.available_bitrates)
+next_rate =bufferbased(rate_prev = 0, buf_now=TestInput.buffer_occupancy, r=TestInput.chunk.time+1, cu = 126,R_i = TestInput.available_bitrates)
 print(next_rate)
 #print('^true')

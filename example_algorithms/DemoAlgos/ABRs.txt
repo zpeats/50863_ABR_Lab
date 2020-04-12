@@ -9,7 +9,7 @@ MPC (All optimaiztion) https://users.ece.cmu.edu/~vsekar/papers/sigcomm15_mpcdas
 robustMPC (no Pseudocode) 
 
 From Practical Evaluation of Rate Adaptation Algorithms Paper:
-file:///C:/Users/natha/Downloads/APracticalEvaluationofRateAdaptationAlgorithmsinHTTP-basedAdaptiveStreaming-Puplished.pdf
+papers\APracticalEvaluationofRateAdaptationAlgorithmsinHTTP-basedAdaptiveStreaming-Puplished.pdf
 DASH  (X)
 Google's MPEG-DASH (X)
 Bitmovin Player (X)

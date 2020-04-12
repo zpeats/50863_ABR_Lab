@@ -1,30 +1,61 @@
-from typing import List
+# from typing import List
+from typing import Optional, List, Union
+# class BufferOccupancy:
+#     current: int
+#     size: int
+#     time: float
+
+#     def __init__(self, current: int, size: int, time: float) -> None:
+#         self.current = current
+#         self.size = size
+#         self.time = time
+
+
+# class TestInput:
+#     measured_bandwidth: float
+#     buffer_occupancy: BufferOccupancy
+#     chunk_time: float
+#     available_bitrates: List[List[int]]
+#     video_time: str
+#     chunks_remaining: str
+#     rebuffering_time: str
+
+#     def __init__(self, measured_bandwidth: float, buffer_occupancy: BufferOccupancy, chunk_time: float, available_bitrates: List[List[int]], video_time: str, chunks_remaining: str, rebuffering_time: str) -> None:
+#         self.measured_bandwidth = measured_bandwidth
+#         self.buffer_occupancy = buffer_occupancy
+#         self.chunk_time = chunk_time
+#         self.available_bitrates = available_bitrates
+#         self.video_time = video_time
+#         self.chunks_remaining = chunks_remaining
+#         self.rebuffering_time = rebuffering_time
+
+
 
 class BufferOccupancy:
     current: int
     size: int
     time: float
+    left: Optional[int]
 
-    def __init__(self, current: int, size: int, time: float) -> None:
+    def __init__(self, current: int, size: int, time: float, left: Optional[int]) -> None:
         self.current = current
         self.size = size
         self.time = time
+        self.left = left
 
 
-class TestInput:
+class TestInput2:
     measured_bandwidth: float
     buffer_occupancy: BufferOccupancy
-    chunk_time: float
-    available_bitrates: List[List[int]]
-    video_time: str
-    chunks_remaining: str
-    rebuffering_time: str
+    available_bitrates: List[List[Union[int, str]]]
+    video_time: float
+    rebuffering_time: float
+    chunk: BufferOccupancy
 
-    def __init__(self, measured_bandwidth: float, buffer_occupancy: BufferOccupancy, chunk_time: float, available_bitrates: List[List[int]], video_time: str, chunks_remaining: str, rebuffering_time: str) -> None:
+    def __init__(self, measured_bandwidth: float, buffer_occupancy: BufferOccupancy, available_bitrates: List[List[Union[int, str]]], video_time: float, rebuffering_time: float, chunk: BufferOccupancy) -> None:
         self.measured_bandwidth = measured_bandwidth
         self.buffer_occupancy = buffer_occupancy
-        self.chunk_time = chunk_time
         self.available_bitrates = available_bitrates
         self.video_time = video_time
-        self.chunks_remaining = chunks_remaining
         self.rebuffering_time = rebuffering_time
+        self.chunk = chunk
