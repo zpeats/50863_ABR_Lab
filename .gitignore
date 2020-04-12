@@ -12,6 +12,8 @@
 .AppleDouble
 .LSOverride
 
+test*.py
+
 # Icon must end with two \r
 Icon
 
