@@ -8,14 +8,22 @@ Input to the function will be:
         "size" : int, //max buffer size
         "time" : float, //how much video time the occupied buffer represents
         },
-    "Chunk Time" : float, //number of second of video next chunk represents
     "Available Bitrates" : { 
         <string, int> //dynamically packed, key will be bitrate, and value will be the byte size of the chunk. See example below
         //EXAMPLE: "1440" : 20000000
     },
     "Video Time" : float, //current simulated time that has elapsed since start of video. This includes buffering
-    "Chunks Remaining" : int, //number of chunks left in video
+    "Rebuffing Flag": Boolean, // flag stating that was rebuffing from last bitrate decision
     "Rebuffering Time" : float, //amount of time spent buffering since last request
+    "Chunk" : {
+        "left" : int, ///number of chunks left in video
+        "size" : int, //the total bytes for chunk (or segment) 
+        "current" : int, //the total received bytes up to now for chuck
+        "time": float, //number of second of video next chunk represents  
+        }
+    "Previous Bitrate" //["0",0] if there was was no previous, same as suggested bitrate
+    "Preferred Bitrate " //Bitrate selected by user 
+
 }
 
 Output:
@@ -26,6 +34,11 @@ Output:
 
 Feel free to comment/change if there are formats that make more sense
 
+Going thru some of the ABR algos some of them use different terms for the same thing. 
+Using your definition above as a based, I will add the equivalencies below. 
+
+Chunk Time = Chunk Size
+Bandwidth*Buffer Ocupancy_current        = download_throughput
 '''
 
 

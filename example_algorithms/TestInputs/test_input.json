@@ -1,0 +1,22 @@
+{
+	"Measured Bandwidth": "float",
+	"Buffer Occupancy": {
+		"current": "int",
+		"size": "int",
+		"time": "float"
+	},
+	"Available Bitrates": [
+		["string", "int"]
+	],
+	"Video Time": "float",
+	"Chunk": {
+        "left": "int",
+        "size": "int",
+        "current": "int",
+        "time": "float"
+    },
+	"Rebuffering Time": "float",
+	"Rebuffing Flag": "boolean",
+	"Previous Bitrate":["string", "int"],
+    "Preferred Bitrate":"string"
+}

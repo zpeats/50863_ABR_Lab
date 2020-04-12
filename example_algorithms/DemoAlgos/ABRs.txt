@@ -1,0 +1,179 @@
+From Pensieve paper:
+http://people.csail.mit.edu/hongzi/content/publications/Pensieve-Sigcomm17.pdf
+
+
+Buffer-based (X)  http://yuba.stanford.edu/~nickm/papers/sigcomm2014-video.pdf
+Rate-based (N/A)
+BOLA (a bit involved) https://arxiv.org/pdf/1601.06748.pdf
+MPC (All optimaiztion) https://users.ece.cmu.edu/~vsekar/papers/sigcomm15_mpcdash.pdf
+robustMPC (no Pseudocode) 
+
+From Practical Evaluation of Rate Adaptation Algorithms Paper:
+papers\APracticalEvaluationofRateAdaptationAlgorithmsinHTTP-basedAdaptiveStreaming-Puplished.pdf
+DASH  (X)
+Google's MPEG-DASH (X)
+Bitmovin Player (X)
+
+----------------------------------------------------------------------------------------------------------------------
+Buffer-based Pseudocode:
+
+Input: 
+    Rate_prev: The previously used video rate //could have it be internal parameter that they pass via arg
+    Buf_now: The current buffer occupancy //we got that
+    r: The size of reservoir  //need reservoir calcultion, at least great than Chunk Time
+    cu: The size of cushion //between 90 to 216, paper used 126
+Output: 
+    Rate_next: The next video rate
+
+if Rate_prev = R_max then
+    Rate_+ = R_max
+else
+    Rate_+ = min{R_i : R_i > Rate_prev} //not sure what this is saying exactly
+
+if Rate_prev = R_min then
+    Rate_− = R_min
+else
+    Rate_− = max{R_i : R_i < Rate_prev} //not sure what this is saying exactly
+
+if Buf_now ≤ r then
+    Rate_next = R_min
+else if Buf_now ≥ (r + cu) then
+    Rate_next = R_max
+else if f(Buf_now) ≥ Rate_+ then
+    Rate_next = max{R_i : R_i < f(Buf_now)};
+else if f(Buf_now) ≤ Rate_− then
+    Rate_next = min{R_i : R_i > f(Buf_now)};
+else
+    Rate_next = Rate_prev;
+return Rate_next;
+
+----------------------------------------------------------------------------------------------------------------------
+
+Google's MPEG-DASH Pseudocode:  //might be too easy, or we just make this be for gimme points
+
+Input: 
+E_slow: the bandwidth estimation for slow channel //
+variation
+E_fast: the bandwidth estimation for fast channel
+variation
+α_slow = 0.99 :the exponential moving average coefficient for E_slow
+α_fast = 0.98: the exponential moving average coefficient for E_fast
+
+Bandwidth estimation update:
+while video data is downloaded do //while rebuffering time != 0 
+    E_slow ← α_slow · E_slow + (1 − α_slow ) · download_throughput  //download_throughput = (Bandwidth*Buffer Ocupancy_current)
+    E_fast ← α_fast · E_fast + (1 − α_fast) · download_throughput
+
+Bitrate decision:
+Bandwidth ← min(E_slow, E_fast) // Estimated bandwidth
+for k ← m to 1 do
+    if Bandwidth >= R_k then //if bandwidth is suitale to the highest possible Bitrate, set it to it 
+        N_i+1 ← R_k
+        break
+return N_i+1
+
+------------------------------------------------------
+
+DASH //Dash uses certain rules of tier, the higher the rule in the code the least important, also uses BOLA
+Input: 
+    n = 3: the number of bandwidth estimation samples (3 for VOD)
+    T_low = 4: the threshold for deciding that the buffer length is low
+    T_rich = 20: the threshold for deciding that the buffer length is sufficient
+    s = 1: the step down factor for decreasing the bitrate when the buffer length is low
+    B_total: the total bytes for segment i
+    B_cur:  the total received bytes up to now for segment i
+    T_elapsed: the elapsed time from the download of first byte for segment i
+    TH_arr: the throughput array used in abandon requests rule (in bps)
+    l = 5: the minimum length to average the throughput in Abandon requests rule
+    T_grace = 0.5: the grace time threshold used in abandon requests rule
+    C_aba = 1.8: the constant for the decision of abandoning the segment in abandon requests rule
+    D: the segment duration
+
+Throughput rule: //might not be necessary as we give bandwidth
+
+sum = 0
+for (j ← 0 to n − 1) do
+    sum ← sum + bw_i−j
+Bandwidth = (sum / n) // Estimated bandwidth //we give this
+if Buffer_len >= T_low · 2 then
+    for k ← m to 1 do
+    if Bandwidth >= Rk then
+        N_i+1 ← Rk //N_i+1 is the chosen bitrate
+        break
+
+Insufficient buffer rule:
+
+if rebuffering then //Rebuffering Time
+    N_i+1 = R1 
+else if (T_low < Buffer_len < T_low · 2_ then
+    N_i+1 = R_Ii−s
+    s = s + 1  //not sure what's the point of this 
+
+Buffer occupancy rule:
+
+if Buffer_len > T_rich then
+    N_i+1 = Rm
+
+Abandon requests rule (called multiple times for a segment): \\might just switch this, seems like this looks at the same chuck various times
+\\we don't do that so there's no need to include that 
+
+add B_cur/T_elapsed to TH_arr //TH_arr is an array so append it 
+
+if length(TH_arr) > l and T_elapsed > T_grace and B_cur < B_total then
+    TH_avg ← average of TH_arr
+    TDownEst ← B_total ∗ 8/TH_avg // estimated download time
+
+    if TDownEst < D ∗ C_aba then
+        return
+    else
+        R_new ← the maximum bitrate that can be covered by TH_avg
+        Best ← B_total ∗ R_new/Ni
+        B_remain ← B_total − B_cur
+        if B_remain > Best then
+            abandon and switch to quality R_new
+return N_i+1 // added by me 
+
+
+----------------------------------------------------------------------------------------------------------------------
+Bitmovin Player //uses rate-based 
+
+
+//Preferred startup switching:
+t: the time passed from start (assuming in sec)
+s: the index of the rate suggested by other switching methods
+R_pre: the preferred startup rate
+
+
+if t < 10 then
+    for k ← m to 1 do //highest to lowest where m is highest and 1 is lowest
+        if k = s then
+            return Ni+1 = Rs
+        if Rk <= R_pre then
+            return Ni+1 = Rk
+    return Ni+1 = Rm
+else
+    return Ni+1 = Rs
+
+//Rate based switching:
+
+// Bandwidth estimation update:
+depth: the number of downloaded segments to use for bandwidth estimation
+N_buf: the buffer size in segment numbers
+sum = 0
+for j ← 0 to depth − 1 do
+sum = (sum + bwi−j · (1 − j/N_buf))
+Bandwidth = sum/depth // Estimated bandwidth
+
+// Bitrate decision:
+Rmin = Infinity
+Rmax = 0
+for all encoding rate index k do
+    if Rmax < Rk and Rk < Bandwidth then
+        Rmax = Rk
+    if Rmin > Rk then
+        Rmin = Rk
+if Rmax > 0 then
+    Ni+1 = Rmax
+else
+    Ni+1 = Rmin
+return N_i+1 
