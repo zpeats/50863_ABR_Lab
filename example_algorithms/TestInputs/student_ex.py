@@ -1,4 +1,4 @@
-
+#TODO Remove Chunk.current and update 
 '''
 Input to the function will be:
 {
@@ -7,7 +7,7 @@ Input to the function will be:
         "current" : int, //number of bytes occupied in the buffer
         "size" : int, //max buffer size
         "time" : float, //how much video time the occupied buffer represents
-        },
+        }, 
     "Available Bitrates" : { 
         <string, int> //dynamically packed, key will be bitrate, and value will be the byte size of the chunk. See example below
         //EXAMPLE: "1440" : 20000000
@@ -18,7 +18,7 @@ Input to the function will be:
     "Chunk" : {
         "left" : int, ///number of chunks left in video
         "size" : int, //the total bytes for chunk (or segment) 
-        "current" : int, //the total received bytes up to now for chuck
+        "current" : int, //the total received bytes up to now for chuck 
         "time": float, //number of second of video next chunk represents  
         }
     "Previous Bitrate" //["0",0] if there was was no previous, same as suggested bitrate
