@@ -1,22 +1,23 @@
 {
 	"Measured Bandwidth": "float",
+	"Previous Throughput" : "float",
 	"Buffer Occupancy": {
 		"current": "int",
 		"size": "int",
 		"time": "float"
 	},
 	"Available Bitrates": [
-		["string", "int"]
+		["int", "int"] //changed to int, int because both numbers are ints, no point converting to string
 	],
 	"Video Time": "float",
 	"Chunk": {
         "left": "int",
-        "size": "int",
+        //"size": "int", chunk size for each corresponding bitrate is in available_bitrates
         "current": "int",
         "time": "float"
     },
 	"Rebuffering Time": "float",
-	"Rebuffing Flag": "boolean",
-	"Previous Bitrate":["string", "int"],
+	//"Rebuffing Flag": "boolean", time is in a way a flag: 0 time evaluates to false
+	//"Previous Bitrate":["string", "int"], Student should keep track of this
     "Preferred Bitrate":"string"
 }
