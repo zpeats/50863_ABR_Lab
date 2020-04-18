@@ -1,43 +1,41 @@
 {
     "Measured Bandwidth": 5.05,
     "Buffer Occupancy": {
-        "current": 4000,
-        "size": 20000000,
-        "time": 4.206
+        "current": 40,
+        "size": 60,
+        "time": 0.206
     },
     "Available Bitrates": [
         [
-            "1440p",
+            1440,
             20000000
         ],
         [
-            "1080p",
+            1080,
             2000000
         ],
         [
-            "720p",
+            720,
             200000
         ],
         [
-            "480p",
+            480,
             20000
         ],
         [
-            "360p",
+            360,
             2000
         ],
         [
-            "144p",
+            144,
             200
         ]
     ],
     "Video Time": 4.9202,
     "Rebuffering Time": 3.14,
-    "Rebuffing Flag": true,
     "Chunk": {
         "left": 4000,
         "size": 20000000,
-        "current": 4,
         "time": 2.69
     },
     "Previous Bitrate":["720p", 200000],

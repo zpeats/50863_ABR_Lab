@@ -12,7 +12,7 @@ Buffer= BufferOccupancy(
     left = None 
 )
 Chunk = BufferOccupancy(
-    current = data['Chunk']['current'],
+    current = None,
     size = data['Chunk']['size'],
     time = data['Chunk']['time'],
     left = data['Chunk']['left'] 
@@ -24,7 +24,6 @@ TestInput = TestInput2(
     available_bitrates = data['Available Bitrates'], 
     video_time = data['Video Time'],  
     rebuffering_time = data['Rebuffering Time'],
-    rebuffing_flag = data['Rebuffing Flag'], 
     chunk = Chunk,
     previous_bitrate = data["Previous Bitrate"],
     preferred_bitrate = data["Preferred Bitrate"] 
@@ -37,23 +36,24 @@ def match(value, list_of_list):
             return e
 
 
-def HYB(Sj = TestInput.chunk.size, current_bitrate=TestInput.buffer_occupancy.current, est_bandwidth=TestInput.measured_bandwidth , beta =.000001, L = TestInput.buffer_occupancy.size, R_i = TestInput.available_bitrates):
+def HYB(buffer_time = TestInput.buffer_occupancy.time, est_bandwidth=TestInput.measured_bandwidth , beta =.2, L = TestInput.buffer_occupancy.current, R_i = TestInput.available_bitrates):
     '''
     Input:
-    Sj: Chuck size
     B: throughput from previous values (current bitrate/estimated bandwidth)
-    current_bitrate: 
+    buf_now: number of bytes occupied in the buffer
     est_bandwidth: estimated bandwidth
     beta:  weight (between 0 and 1)
-    L: Buffer length/size 
+    L: Buffer length  
     R_i: Array of bitrates of videos, key will be bitrate, and value will be the byte size of the chunk
+    buffer_time: how much video time (in secs) the occupied buffer represents 
     
     Output: 
     Rate_next: The next video rate
     '''
-    B = current_bitrate/est_bandwidth
+    B = L/buffer_time
     # print(B)
     # print(L)
+
     m = len(R_i)-1
     threshold = L*beta*B
     # print(threshold)
@@ -61,13 +61,12 @@ def HYB(Sj = TestInput.chunk.size, current_bitrate=TestInput.buffer_occupancy.cu
         if R_i[k][1] <= threshold:
             rate_next = R_i[k][1]
             return rate_next
-    
-
+    return R_i[len(R_i)-1][1]
 
 
     #return rate_next
 
-next_rate = HYB(Sj = TestInput.chunk.size, current_bitrate=TestInput.buffer_occupancy.current, est_bandwidth=TestInput.measured_bandwidth , beta =.000001, L = TestInput.buffer_occupancy.size, R_i = TestInput.available_bitrates )
+next_rate = HYB()
 print(next_rate)
 
 

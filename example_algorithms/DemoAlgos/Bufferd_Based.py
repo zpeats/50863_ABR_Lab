@@ -12,7 +12,7 @@ Buffer= BufferOccupancy(
     left = None 
 )
 Chunk = BufferOccupancy(
-    current = data['Chunk']['current'],
+    current = None,
     size = data['Chunk']['size'],
     time = data['Chunk']['time'],
     left = data['Chunk']['left'] 
@@ -24,7 +24,6 @@ TestInput = TestInput2(
     available_bitrates = data['Available Bitrates'], 
     video_time = data['Video Time'],  
     rebuffering_time = data['Rebuffering Time'],
-    rebuffing_flag = data['Rebuffing Flag'], 
     chunk = Chunk, 
     previous_bitrate = data["Previous Bitrate"],
     preferred_bitrate = data["Preferred Bitrate"]
@@ -37,11 +36,11 @@ def match(value, list_of_list):
             return e
 
 
-def bufferbased(rate_prev = 0, buf_now=TestInput.buffer_occupancy, r=TestInput.chunk.time+1, cu = 126,R_i = TestInput.available_bitrates):
+def bufferbased(rate_prev = 0, buf_now=TestInput.buffer_occupancy, r=TestInput.chunk.time+1, cu = 126, R_i = TestInput.available_bitrates):
     '''
     Input: 
-    Rate_prev: The previously used video rate //could have it be internal parameter that they pass via arg
-    Buf_now: The current buffer occupancy //we got that
+    rate_prev: The previously used video rate
+    Buf_now: The current buffer occupancy 
     r: The size of reservoir  //At least great than Chunk Time
     cu: The size of cushion //between 90 to 216, paper used 126
     R_i: Array of bitrates of videos, key will be bitrate, and value will be the byte size of the chunk
@@ -63,7 +62,7 @@ def bufferbased(rate_prev = 0, buf_now=TestInput.buffer_occupancy, r=TestInput.c
         if more_rate_prev == []:
             rate_plus = 0
         else: 
-            rate_plus = max(more_rate_prev)
+            rate_plus = min(more_rate_prev)
     #set rate_min to highest resonable rate
     if rate_prev == R_min:
         rate_mins = R_min
@@ -82,7 +81,7 @@ def bufferbased(rate_prev = 0, buf_now=TestInput.buffer_occupancy, r=TestInput.c
         rate_next = R_max
         #print(rate_next)
         #print('^2nd')
-    elif buf_now.size >= rate_plus:
+    elif buf_now.current >= rate_plus:
         less_buff_now= list(i[1] for i in R_i if i[1] < buf_now.current)
         if less_buff_now == []:
             rate_next = 0
@@ -90,7 +89,7 @@ def bufferbased(rate_prev = 0, buf_now=TestInput.buffer_occupancy, r=TestInput.c
             rate_next = max(less_buff_now)
         #print(rate_next)
         #print('^3rd')
-    elif buf_now.size <= rate_mins:
+    elif buf_now.current <= rate_mins:
         more_buff_now= list(i[1] for i in R_i if i[1] > buf_now.current)
         if more_buff_now == []:
             rate_next = 0
@@ -106,6 +105,6 @@ def bufferbased(rate_prev = 0, buf_now=TestInput.buffer_occupancy, r=TestInput.c
     return rate_next
 
 next_rate =bufferbased(rate_prev = 0, buf_now=TestInput.buffer_occupancy, r=TestInput.chunk.time+1, cu = 126,R_i = TestInput.available_bitrates)
-# print(next_rate)
+print(next_rate)
 #print('^true')
 print(match(next_rate,TestInput.available_bitrates)[0])
