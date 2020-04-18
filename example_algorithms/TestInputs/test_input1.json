@@ -1,8 +1,8 @@
 {
     "Measured Bandwidth": 5.05,
     "Buffer Occupancy": {
-        "current": 4000,
-        "size": 20000000,
+        "current": 6,
+        "size": 60,
         "time": 4.206
     },
     "Available Bitrates": [
@@ -31,7 +31,7 @@
             200
         ]
     ],
-    "Video Time": 4.9202,
+    "Video Time": 14.9202,
     "Rebuffering Time": 3.14,
     "Rebuffing Flag": false,
     "Chunk": {

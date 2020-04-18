@@ -1,9 +1,9 @@
 {
     "Measured Bandwidth": 5.05,
     "Buffer Occupancy": {
-        "current": 4000,
-        "size": 20000000,
-        "time": 4.206
+        "current": 40,
+        "size": 60,
+        "time": 0.206
     },
     "Available Bitrates": [
         [
