@@ -37,7 +37,6 @@
     "Chunk": {
         "left": 4000,
         "size": 20000000,
-        "current": 4,
         "time": 2.69
     },
     "Previous Bitrate":["0p",0],

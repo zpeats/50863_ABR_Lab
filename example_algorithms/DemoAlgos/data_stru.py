@@ -1,12 +1,12 @@
 from typing import Optional, List, Union
 
 class BufferOccupancy:
-    current: int
+    current: Optional[int]
     size: int
     time: float
     left: Optional[int]
 
-    def __init__(self, current: int, size: int, time: float, left: Optional[int]) -> None:
+    def __init__(self, current: Optional[int], size: int, time: float, left: Optional[int]) -> None:
         self.current = current
         self.size = size
         self.time = time

@@ -12,7 +12,7 @@ Buffer= BufferOccupancy(
     left = None 
 )
 Chunk = BufferOccupancy(
-    current = data['Chunk']['current'],
+    current = None,
     size = data['Chunk']['size'],
     time = data['Chunk']['time'],
     left = data['Chunk']['left'] 

@@ -12,7 +12,6 @@
 	"Chunk": {
         "left": "int",
         "size": "int",
-        "current": "int",
         "time": "float"
     },
 	"Rebuffering Time": "float",

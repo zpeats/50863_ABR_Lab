@@ -1,4 +1,3 @@
-#TODO Remove Chunk.current and update 
 '''
 Input to the function will be:
 {
@@ -18,7 +17,6 @@ Input to the function will be:
     "Chunk" : {
         "left" : int, ///number of chunks left in video
         "size" : int, //the total bytes for chunk (or segment) 
-        "current" : int, //the total received bytes up to now for chuck 
         "time": float, //number of second of video next chunk represents  
         }
     "Previous Bitrate" //["0",0] if there was was no previous, same as suggested bitrate
@@ -34,10 +32,6 @@ Output:
 
 Feel free to comment/change if there are formats that make more sense
 
-Going thru some of the ABR algos some of them use different terms for the same thing. 
-Using your definition above as a based, I will add the equivalencies below. 
-
-Buffer Ocupancy_current/Bandwidth = throughput //assuming propagation delay is negligible
 '''
 
 
