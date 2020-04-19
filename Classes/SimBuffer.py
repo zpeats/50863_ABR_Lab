@@ -50,13 +50,13 @@ class SimBuffer:
             if self.chunks:
                 current_chunk = self.chunks.pop(0)
 
-                chunk_time_remaining = current_chunk[1] - self.mid_chunk_time
+                chunk_time_remaining = current_chunk[1]
 
                 playback_time -= chunk_time_remaining
 
                 if playback_time < 0:
-                    self.mid_chunk_time = playback_time
-                    self.chunks.insert(0, current_chunk)
+                    chunk_time_remaining = -1 * playback_time
+                    self.chunks.insert(0, (current_chunk[0], chunk_time_remaining))
                     return 0
 
 
