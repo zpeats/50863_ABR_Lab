@@ -1,17 +1,12 @@
 import random
 
 random.seed(None)
-bitrate = 0 
+
 def student_entrypoint(Measured_Bandwidth, Previous_Throughput, Buffer_Occupancy, Available_Bitrates, Video_Time, Chunk, Rebuffering_Time, Preferred_Bitrate ):
     #student can do whatever they want from here going forward
-    global bitrate
     R_i = list(Available_Bitrates.items())
-    print(bitrate)
-    bitrate = DASH(buf_current = Buffer_Occupancy['current'], rebuffering = Rebuffering_Time ,est_bandwidth=Measured_Bandwidth, T_low=4, T_rich=20, R_i = R_i, previous_bitrate =bitrate)
-    print(bitrate)
-    return bitrate
     # R_i.sort(key=lambda tup: tup[1] , reverse=True)
-    # return HYB(buffer_time =Buffer_Occupancy['time'],B =Previous_Throughput  ,est_bandwidth=Measured_Bandwidth, beta=.2, L = Buffer_Occupancy['current'], R_i = R_i)
+    return HYB(buffer_time =Buffer_Occupancy['time'],B =Previous_Throughput  ,est_bandwidth=Measured_Bandwidth, beta=.2, L = Buffer_Occupancy['current'], R_i = R_i)
     # return random_choice(Available_Bitrates)
     #pass
 
@@ -21,7 +16,7 @@ def random_choice(bitrates):
     return bitrates_list[choiceind - 1][0]
 
 
-def DASH(buf_current, rebuffering ,est_bandwidth, R_i , previous_bitrate, T_low=4, T_rich=20):
+def DASH(buf_current = TestInput.buffer_occupancy.current, rebuffering = TestInput.rebuffering_time ,est_bandwidth=TestInput.measured_bandwidth, T_low=4, T_rich=20, R_i = TestInput.available_bitrates, previous_bitrate =[144,200]):
     '''
     Input: 
     T_low = 4: the threshold for deciding that the buffer length is low
