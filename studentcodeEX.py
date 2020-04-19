@@ -20,6 +20,15 @@ def random_choice(bitrates):
     choiceind = random.randrange(1, len(bitrates))
     return bitrates_list[choiceind - 1][0]
 
+def match(value, list_of_list): 
+    for e in list_of_list:
+        if value == e[1]:
+            return e
+def index(value,list_of_list):
+    for e in range(len(list_of_list)):
+        if value == list_of_list[e]:
+            return e
+    return len(list_of_list)-1
 
 def DASH(buf_current, rebuffering ,est_bandwidth, R_i , previous_bitrate, T_low=4, T_rich=20):
     '''
