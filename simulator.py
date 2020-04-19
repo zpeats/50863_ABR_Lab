@@ -92,7 +92,7 @@ if __name__ == "__main__":
         #bad response checking, ensure chunk fits in buffer
         try:
             stu_chunk_size = av_bitrates[int(chosen_bitrate)]
-        except( ValueError ):
+        except( KeyError ):
             print("Student returned invalid bitrate, exiting")
             break
 
