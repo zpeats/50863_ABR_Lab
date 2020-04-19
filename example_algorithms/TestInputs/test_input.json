@@ -16,7 +16,5 @@
         "time": "float"
     },
 	"Rebuffering Time": "float",
-	//"Rebuffing Flag": "boolean", time is in a way a flag: 0 time evaluates to false
-	//"Previous Bitrate":["string", "int"], Student should keep track of this
     "Preferred Bitrate":"string"
 }

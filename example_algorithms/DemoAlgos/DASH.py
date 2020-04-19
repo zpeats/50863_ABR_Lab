@@ -25,7 +25,6 @@ TestInput = TestInput2(
     video_time = data['Video Time'],  
     rebuffering_time = data['Rebuffering Time'],
     chunk = Chunk,
-    previous_bitrate = data["Previous Bitrate"],
     preferred_bitrate = data["Preferred Bitrate"] 
     )
 
@@ -41,7 +40,7 @@ def index(value,list_of_list):
     return len(list_of_list)-1
 
 #buf_current should be buffer current
-def DASH(buf_current = TestInput.buffer_occupancy.current, rebuffering = TestInput.rebuffering_time ,est_bandwidth=TestInput.measured_bandwidth, T_low=4, T_rich=20, R_i = TestInput.available_bitrates, previous_bitrate =TestInput.previous_bitrate):
+def DASH(buf_current = TestInput.buffer_occupancy.current, rebuffering = TestInput.rebuffering_time ,est_bandwidth=TestInput.measured_bandwidth, T_low=4, T_rich=20, R_i = TestInput.available_bitrates, previous_bitrate =[144,200]):
     '''
     Input: 
     T_low = 4: the threshold for deciding that the buffer length is low

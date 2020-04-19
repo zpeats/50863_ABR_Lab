@@ -4,21 +4,7 @@ random.seed(None)
 
 def student_entrypoint(Measured_Bandwidth, Previous_Throughput, Buffer_Occupancy, Available_Bitrates, Video_Time, Chunk, Rebuffering_Time, Preferred_Bitrate ):
     #student can do whatever they want from here going forward
-    print(Measured_Bandwidth)
-    print()
-    print(Previous_Throughput)
-    print()
-    print(Buffer_Occupancy)
-    print()
-    print(Available_Bitrates)
-    print()
-    print(Video_Time)
-    print()
-    print(Chunk)
-    print()
-    print(Rebuffering_Time)
-    print()
-    print(Preferred_Bitrate)
+    
     return random_choice(Available_Bitrates)
 
 def random_choice(bitrates):

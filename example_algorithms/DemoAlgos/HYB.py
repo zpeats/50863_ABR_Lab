@@ -25,7 +25,6 @@ TestInput = TestInput2(
     video_time = data['Video Time'],  
     rebuffering_time = data['Rebuffering Time'],
     chunk = Chunk,
-    previous_bitrate = data["Previous Bitrate"],
     preferred_bitrate = data["Preferred Bitrate"] 
     )
 

@@ -25,7 +25,6 @@ TestInput = TestInput2(
     video_time = data['Video Time'],  
     rebuffering_time = data['Rebuffering Time'],
     chunk = Chunk,
-    previous_bitrate = data["Previous Bitrate"],
     preferred_bitrate = data["Preferred Bitrate"] 
     )
 
@@ -36,7 +35,7 @@ def match(value, list_of_list):
             return e
 
 
-def bitmovin(time =TestInput.video_time , rate_sug =TestInput.previous_bitrate[0] , rate_pref =TestInput.preferred_bitrate , R_i = TestInput.available_bitrates, buf_current=TestInput.buffer_occupancy.current):
+def bitmovin(time =TestInput.video_time , rate_sug =144 , rate_pref =TestInput.preferred_bitrate , R_i = TestInput.available_bitrates, buf_current=TestInput.buffer_occupancy.current):
     '''
     Input: 
     time: the time passed from start (assuming in sec)
@@ -88,7 +87,7 @@ def bitmovin(time =TestInput.video_time , rate_sug =TestInput.previous_bitrate[0
         return rate_next
 
 # next_rate = bitmovin(time =9 , rate_sug ="720p" , rate_pref ="1080p" , R_i = TestInput.available_bitrates, buf_current=TestInput.buffer_occupancy.current)
-next_rate = bitmovin(time =TestInput.video_time , rate_sug =TestInput.previous_bitrate[0] , rate_pref =TestInput.preferred_bitrate , R_i = TestInput.available_bitrates, buf_current=TestInput.buffer_occupancy.current)
+next_rate = bitmovin()
 print(next_rate)
 
 
