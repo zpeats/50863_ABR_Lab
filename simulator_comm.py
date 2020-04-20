@@ -15,7 +15,8 @@ def send_req_json(m_band, prev_throughput, buf_occ, av_bitrates, current_time, c
                      "Video Time" : current_time,
                      "Chunk" : chunk_arg,
                      "Rebuffering Time" : rebuff_time,
-                     "Preferred Bitrate" : pref_bitrate})
+                     "Preferred Bitrate" : pref_bitrate,
+                     "exit" : 0})
     req += '\n'
 
     s.sendall(req.encode())
@@ -32,6 +33,13 @@ def send_req_json(m_band, prev_throughput, buf_occ, av_bitrates, current_time, c
             response = json.loads(message)
 
             return response["bitrate"]
+
+
+def send_exit():
+    req = json.dumps({"exit" : 1})
+
+    req += '\n'
+    s.sendall(req.encode())
 
 
 if __name__ == "__main__":

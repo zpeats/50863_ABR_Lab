@@ -6,13 +6,13 @@
 		"size": "int",
 		"time": "float"
 	},
-	"Available Bitrates": [
-		["int", "int"] 
-	],
+	"Available Bitrates": {
+		"string": "int",
+},
 	"Video Time": "float",
 	"Chunk": {
         "left": "int",
-        "size": "int",
+		"current": "int",
         "time": "float"
     },
 	"Rebuffering Time": "float",

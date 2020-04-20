@@ -130,4 +130,5 @@ if __name__ == "__main__":
 
 
     #cleanup and return
+    simulator_comm.send_exit()
     print('we made it to the end! debug here')
