@@ -70,7 +70,7 @@ def bitmovin(time =TestInput.video_time , rate_sug =144 , rate_pref =TestInput.p
         # print('End 3')
         return rate_next
     else:
-        #Rate based Swtiching
+        #Rate based Switching
         R_min = float("inf")
         R_max = 0
         for k in range(m,0,-1):

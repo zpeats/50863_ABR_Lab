@@ -53,7 +53,7 @@ def bufferbased(rate_prev = [144,200], buf_now=TestInput.buffer_occupancy, r=Tes
     R_min = min(i[1] for i in R_i)
 
     
-    #set rate_plus to lowest resonable rate
+    #set rate_plus to lowest reasonable rate
     if rate_prev[1] == R_max:
         rate_plus = R_max
     else:
@@ -62,7 +62,7 @@ def bufferbased(rate_prev = [144,200], buf_now=TestInput.buffer_occupancy, r=Tes
             rate_plus = 0
         else: 
             rate_plus = min(more_rate_prev)
-    #set rate_min to highest resonable rate
+    #set rate_min to highest reasonable rate
     if rate_prev[1] == R_min:
         rate_mins = R_min
     else:
