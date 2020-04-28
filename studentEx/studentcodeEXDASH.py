@@ -7,9 +7,9 @@ def student_entrypoint(Measured_Bandwidth, Previous_Throughput, Buffer_Occupancy
     global bitrate
     R_i = list(Available_Bitrates.items())
     R_i.sort(key=lambda tup: tup[1] , reverse=True)
-    print(bitrate)
+    # print(bitrate)
     bitrate = DASH(buf_current = Buffer_Occupancy['current'], rebuffering = Rebuffering_Time ,est_bandwidth=Measured_Bandwidth, T_low=4, T_rich=20, R_i = R_i, previous_bitrate =bitrate)
-    print(bitrate)
+    # print(bitrate)
     return bitrate
     # R_i.sort(key=lambda tup: tup[1] , reverse=True)
     # return HYB(buffer_time =Buffer_Occupancy['time'],B =Previous_Throughput  ,est_bandwidth=Measured_Bandwidth, beta=.2, L = Buffer_Occupancy['current'], R_i = R_i)

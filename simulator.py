@@ -62,7 +62,7 @@ if __name__ == "__main__":
     current_time = 0
     prev_throughput = 0
     rebuff_time = 0
-    pref_bitrate = None
+    pref_bitrate = manifest["Preferred_Bitrate"]
 
     stu_chunk_size = None
 

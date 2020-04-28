@@ -8,6 +8,8 @@ def student_entrypoint(Measured_Bandwidth, Previous_Throughput, Buffer_Occupancy
     global bitrate
     R_i = list(Available_Bitrates.items())
     R_i.sort(key=lambda tup: tup[1] , reverse=True)
+    # print(Buffer_Occupancy['current'])
+    # print(R_i)
     # print(bitrate)
     bitrate = bitmovin(time =Video_Time , rate_sug =bitrate , rate_pref =Preferred_Bitrate , R_i = R_i, buf_current=Buffer_Occupancy['current']) 
     # print(bitrate)
@@ -78,14 +80,17 @@ def bitmovin(time, rate_sug, rate_pref, R_i, buf_current):
         #Rate based Swtiching
         R_min = ['float("inf")',float("inf")] 
         R_max = ['0',0]
-        for k in range(m,0,-1):
+        for k in range(m,-1,-1):
+            # print(R_max[1] < R_i[k][1])
+            # print(R_i[k][1] < buf_current)
             if R_max[1] < R_i[k][1] and R_i[k][1] < buf_current:
                 R_max = R_i[k]
+                # print(k)
             if R_min[1] > R_i[k][1]:
                 R_min = R_i[k]
         if R_max[1] > 0:
             rate_next = R_max[0]
-            print(R_max)
+            # print(R_max)
         else:
             rate_next = R_min[0]
         # print('End 4')

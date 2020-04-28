@@ -84,7 +84,7 @@ def DASH(buf_current = TestInput.buffer_occupancy.current, rebuffering = TestInp
     # print(rate_next)
     # print('^2nd')
     
-    # #buffer occupany rule: 
+    # #buffer occupancy rule: 
     if buf_current > T_rich:
         rate_next = R_i[0][1]
     # print(rate_next)
