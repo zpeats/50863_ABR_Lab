@@ -61,7 +61,7 @@ def bufferbased(rate_prev, buf_now, r, R_i , cu = 126):
     # print(R_max)
     # print(rate_prev)
     
-    #set rate_plus to lowest resonable rate
+    #set rate_plus to lowest reasonable rate
     if rate_prev[1] == R_max:
         rate_plus = R_max
     else:
@@ -70,7 +70,7 @@ def bufferbased(rate_prev, buf_now, r, R_i , cu = 126):
             rate_plus = rate_prev[1]
         else: 
             rate_plus = min(more_rate_prev)
-    #set rate_min to highest resonable rate
+    #set rate_min to highest reasonable rate
     if rate_prev[1] == R_min:
         rate_mins = R_min
     else:

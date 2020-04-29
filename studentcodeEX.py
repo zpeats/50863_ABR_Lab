@@ -8,10 +8,8 @@ def student_entrypoint(Measured_Bandwidth, Previous_Throughput, Buffer_Occupancy
     global bitrate
     R_i = list(Available_Bitrates.items())
     R_i.sort(key=lambda tup: tup[1] , reverse=True)
-    # print(Buffer_Occupancy['current'])
-    # print(R_i)
     # print(bitrate)
-    bitrate = bitmovin(time =Video_Time , rate_sug =bitrate , rate_pref =Preferred_Bitrate , R_i = R_i, buf_current=Buffer_Occupancy['current']) 
+    bitrate = bufferbased(rate_prev=bitrate, buf_now= Buffer_Occupancy, r=Chunk['time']+1,R_i= R_i ) 
     # print(bitrate)
     return bitrate
     # return random_choice(Available_Bitrates)
@@ -42,56 +40,77 @@ def index(value,list_of_list):
             return e
     return len(list_of_list)-1
 
-
-def bitmovin(time, rate_sug, rate_pref, R_i, buf_current):
+def bufferbased(rate_prev, buf_now, r, R_i , cu = 126):
     '''
     Input: 
-    time: the time passed from start (assuming in sec)
-    rate_sug: the rate suggested by other switching methods, if at start this is 0p
-    rate_pref: the preferred startup rate
-    buf_current: number of bytes occupied in the buffer
+    rate_prev: The previously used video rate
+    Buf_now: The current buffer occupancy 
+    r: The size of reservoir  //At least great than Chunk Time
+    cu: The size of cushion //between 90 to 216, paper used 126
     R_i: Array of bitrates of videos, key will be bitrate, and value will be the byte size of the chunk
     
     Output: 
     Rate_next: The next video rate
     '''
     
-    #Preferred Startup Switching 
-    m = len(R_i)-1
-    s = prevmatch(rate_sug,R_i)
     
-    p = prevmatch(rate_pref,R_i)
-    # print(time)
-    if time < 10:
-        for k in range(m):
-            # print(R_i[k])
-            if R_i[k] == s:  
-                rate_next = s[0]
-                # print('End 1')
-                return rate_next
-            if R_i[k][1] <= p[1]:
-                rate_next = R_i[k][0]
-                # print('End 2')
-                return rate_next
-        rate_next = R_i[0][0]
-        # print('End 3')
-        return rate_next
+    R_max = max(i[1] for i in R_i)
+    R_min = min(i[1] for i in R_i)
+    # print(R_i)
+    rate_prev = prevmatch(rate_prev,R_i)
+    # print(R_max)
+    # print(rate_prev)
+    
+    #set rate_plus to lowest reasonable rate
+    if rate_prev[1] == R_max:
+        rate_plus = R_max
     else:
-        #Rate based Swtiching
-        R_min = ['float("inf")',float("inf")] 
-        R_max = ['0',0]
-        for k in range(m,-1,-1):
-            # print(R_max[1] < R_i[k][1])
-            # print(R_i[k][1] < buf_current)
-            if R_max[1] < R_i[k][1] and R_i[k][1] < buf_current:
-                R_max = R_i[k]
-                # print(k)
-            if R_min[1] > R_i[k][1]:
-                R_min = R_i[k]
-        if R_max[1] > 0:
-            rate_next = R_max[0]
-            # print(R_max)
-        else:
-            rate_next = R_min[0]
-        # print('End 4')
-        return rate_next
+        more_rate_prev = list(i[1] for i in R_i if i[1] > rate_prev[1])
+        if more_rate_prev == []:
+            rate_plus = rate_prev[1]
+        else: 
+            rate_plus = min(more_rate_prev)
+    #set rate_min to highest reasonable rate
+    if rate_prev[1] == R_min:
+        rate_mins = R_min
+    else:
+        less_rate_prev= list(i[1] for i in R_i if i[1] < rate_prev[1])
+        if less_rate_prev == []:
+            rate_mins = rate_prev[1]
+        else: 
+            rate_mins = max(less_rate_prev)
+    #Buffer based
+    if buf_now['time'] <= r:
+        rate_next = R_min
+        rate_next = match(R_min, R_i)[0]
+        #print(rate_next)
+        #print('^1st')
+    elif buf_now['time'] >= (r + cu):
+        rate_next = R_max
+        rate_next = match(R_max, R_i)[0]
+        #print(rate_next)
+        #print('^2nd')
+    elif buf_now['current'] >= rate_plus:
+        less_buff_now= list(i[1] for i in R_i if i[1] < buf_now['current'])
+        if less_buff_now == []:
+            rate_next = rate_prev[0]
+        else: 
+            rate_next = max(less_buff_now)
+            rate_next = match(rate_next, R_i)[0]
+        #print(rate_next)
+        #print('^3rd')
+    elif buf_now['current'] <= rate_mins:
+        more_buff_now= list(i[1] for i in R_i if i[1] > buf_now['current'])
+        if more_buff_now == []:
+            rate_next = rate_prev[0]
+        else: 
+            rate_next = min(more_buff_now)
+            rate_next = match(rate_next, R_i)[0]
+        #print(rate_next)
+        #print('^4th')
+    else:
+        rate_next = rate_prev[0]
+
+        #print(rate_next)
+        #print('^last')
+    return rate_next

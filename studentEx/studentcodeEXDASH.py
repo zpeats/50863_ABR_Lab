@@ -49,7 +49,7 @@ def DASH(buf_time, rebuffering ,est_bandwidth, R_i , previous_bitrate, T_low=4, 
     m = len(R_i)-1
     if buf_time >= T_low*2:
         for k in range(0, m):
-            if est_bandwidth >= R_i[k][1]:
+            if est_bandwidth/8 >= R_i[k][1]:
                 rate_next = R_i[k][0]
                 return rate_next
                 break

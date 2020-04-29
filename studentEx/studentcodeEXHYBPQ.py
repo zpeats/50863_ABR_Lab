@@ -6,7 +6,7 @@ def student_entrypoint(Measured_Bandwidth, Previous_Throughput, Buffer_Occupancy
     #student can do whatever they want from here going forward
     R_i = list(Available_Bitrates.items())
     R_i.sort(key=lambda tup: tup[1] , reverse=True)
-    return HYB(buffer_time =Buffer_Occupancy['time'],B =Previous_Throughput  ,est_bandwidth=Measured_Bandwidth, L = Buffer_Occupancy['current'], R_i = R_i)
+    return HYB(B =Previous_Throughput , L = Buffer_Occupancy['current'], R_i = R_i)
     # return random_choice(Available_Bitrates)
     #pass
 
@@ -16,7 +16,7 @@ def random_choice(bitrates):
     return bitrates_list[choiceind - 1][0]
 
 
-def HYB(buffer_time, B ,est_bandwidth, L, R_i,beta =2E-5 ):
+def HYB(B, L, R_i,beta =2E-5 ):
     '''
     Input:
     B: throughput from previous values (current bitrate/estimated bandwidth)
@@ -35,7 +35,7 @@ def HYB(buffer_time, B ,est_bandwidth, L, R_i,beta =2E-5 ):
     # print(L)
     # print(beta)
     m = len(R_i)-1
-    threshold = L*beta*B
+    threshold = L*beta*(B/8)
     # print(threshold)
     for k in range(m):
         if R_i[k][1] <= threshold:

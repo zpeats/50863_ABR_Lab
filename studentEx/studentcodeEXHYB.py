@@ -35,7 +35,7 @@ def HYB(buffer_time, B ,est_bandwidth, L, R_i,beta =.02):
     # print(L)
 
     m = len(R_i)-1
-    threshold = L*beta*B
+    threshold = L*beta*(B/8) 
     # print(threshold)
     for k in range(m):
         if R_i[k][1] <= threshold:
