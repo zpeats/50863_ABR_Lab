@@ -69,4 +69,4 @@ class SimBuffer:
         return 0
         #TODO: figure out actual proper conversion for buffer time
     def buffer_relative_time(self):
-        self.time = self.cur_size/self.size *250
+        self.time = self.cur_size  *.5e-4
