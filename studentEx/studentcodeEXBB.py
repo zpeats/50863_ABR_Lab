@@ -91,7 +91,7 @@ def bufferbased(rate_prev, buf_now, r, R_i , cu = 126):
         #print(rate_next)
         #print('^2nd')
     elif buf_now['current'] >= rate_plus:
-        less_buff_now= list(i[1] for i in R_i if i[1] < buf_now.current)
+        less_buff_now= list(i[1] for i in R_i if i[1] < buf_now['current'])
         if less_buff_now == []:
             rate_next = rate_prev[0]
         else: 
@@ -100,7 +100,7 @@ def bufferbased(rate_prev, buf_now, r, R_i , cu = 126):
         #print(rate_next)
         #print('^3rd')
     elif buf_now['current'] <= rate_mins:
-        more_buff_now= list(i[1] for i in R_i if i[1] > buf_now.current)
+        more_buff_now= list(i[1] for i in R_i if i[1] > buf_now['current'])
         if more_buff_now == []:
             rate_next = rate_prev[0]
         else: 
