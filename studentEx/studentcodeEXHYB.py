@@ -16,7 +16,7 @@ def random_choice(bitrates):
     return bitrates_list[choiceind - 1][0]
 
 
-def HYB(buffer_time, B ,est_bandwidth, L, R_i,beta =.02):
+def HYB(B, L, R_i,beta =.02):
     '''
     Input:
     B: throughput from previous values (current bitrate/estimated bandwidth)

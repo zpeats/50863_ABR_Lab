@@ -2,16 +2,17 @@ import random
 
 random.seed(None)
 bitrate = 0 
-
 def student_entrypoint(Measured_Bandwidth, Previous_Throughput, Buffer_Occupancy, Available_Bitrates, Video_Time, Chunk, Rebuffering_Time, Preferred_Bitrate ):
     #student can do whatever they want from here going forward
     global bitrate
     R_i = list(Available_Bitrates.items())
     R_i.sort(key=lambda tup: tup[1] , reverse=True)
     # print(bitrate)
-    bitrate = bufferbased(rate_prev=bitrate, buf_now= Buffer_Occupancy, r=Chunk['time']+1,R_i= R_i ) 
+    bitrate = DASH(buf_time = Buffer_Occupancy['time'], rebuffering = Rebuffering_Time ,est_bandwidth=Measured_Bandwidth, T_low=4, T_rich=20, R_i = R_i, previous_bitrate =bitrate)
     # print(bitrate)
     return bitrate
+    # R_i.sort(key=lambda tup: tup[1] , reverse=True)
+    # return HYB(buffer_time =Buffer_Occupancy['time'],B =Previous_Throughput  ,est_bandwidth=Measured_Bandwidth, beta=.2, L = Buffer_Occupancy['current'], R_i = R_i)
     # return random_choice(Available_Bitrates)
     #pass
 
@@ -24,93 +25,67 @@ def match(value, list_of_list):
     for e in list_of_list:
         if value == e[1]:
             return e
-
-def prevmatch(value, list_of_list): 
-    for e in list_of_list:
-        if value == e[1]:
-            return e
-    value = max(i[1] for i in list_of_list)
-    for e in list_of_list:
-        if value == e[1]:
-            return e
-
 def index(value,list_of_list):
     for e in range(len(list_of_list)):
         if value == list_of_list[e]:
             return e
     return len(list_of_list)-1
 
-def bufferbased(rate_prev, buf_now, r, R_i , cu = 126):
+def DASH(buf_time, rebuffering ,est_bandwidth, R_i , previous_bitrate, T_low=4, T_rich=20):
     '''
     Input: 
-    rate_prev: The previously used video rate
-    Buf_now: The current buffer occupancy 
-    r: The size of reservoir  //At least great than Chunk Time
-    cu: The size of cushion //between 90 to 216, paper used 126
+    T_low = 4: the threshold for deciding that the buffer length is low
+    T_rich = 20: the threshold for deciding that the buffer length is sufficient 
+    est_bandwidth: estimated bandwidth
+    rebuffering: flag stating that was rebuffing from last bitrate decision
+    buf_current: number of bytes occupied in the buffer
     R_i: Array of bitrates of videos, key will be bitrate, and value will be the byte size of the chunk
-    
+    previous_bitrate:
+
     Output: 
     Rate_next: The next video rate
     '''
+    #throughput rule:
+    m = len(R_i)-1
+    if buf_time >= T_low*2:
+        for k in range(0, m):
+            if est_bandwidth/8 >= R_i[k][1]:
+                rate_next = R_i[k][0]
+                # return rate_next
+                break
+    # print(rate_next)
+    # print('^1st')
     
+    #insufficient buffer rule: 
     
-    R_max = max(i[1] for i in R_i)
-    R_min = min(i[1] for i in R_i)
-    # print(R_i)
-    rate_prev = prevmatch(rate_prev,R_i)
-    # print(R_max)
-    # print(rate_prev)
+    if rebuffering != 0:
+        rate_next = R_i[m][0]
+        # print(rate_next)
+        return rate_next
+    elif T_low < buf_time and buf_time < T_low *2:
+        # print(previous_bitrate)
+        # print(R_i)
+        R_min = match(min(i[1] for i in R_i),R_i)
+        # print(R_min)
+        i=index(previous_bitrate,R_i)
+        if R_min == R_i[i]:
+            rate_next = R_i[i][0]
+        else:
+            rate_next = R_i[i+1][0] 
+        return rate_next
+        # print(i)
+        # print(rate_next)
+    # print(rate_next)
+    # print('^2nd')
     
-    #set rate_plus to lowest reasonable rate
-    if rate_prev[1] == R_max:
-        rate_plus = R_max
-    else:
-        more_rate_prev = list(i[1] for i in R_i if i[1] > rate_prev[1])
-        if more_rate_prev == []:
-            rate_plus = rate_prev[1]
-        else: 
-            rate_plus = min(more_rate_prev)
-    #set rate_min to highest reasonable rate
-    if rate_prev[1] == R_min:
-        rate_mins = R_min
-    else:
-        less_rate_prev= list(i[1] for i in R_i if i[1] < rate_prev[1])
-        if less_rate_prev == []:
-            rate_mins = rate_prev[1]
-        else: 
-            rate_mins = max(less_rate_prev)
-    #Buffer based
-    if buf_now['time'] <= r:
-        rate_next = R_min
-        rate_next = match(R_min, R_i)[0]
-        #print(rate_next)
-        #print('^1st')
-    elif buf_now['time'] >= (r + cu):
-        rate_next = R_max
-        rate_next = match(R_max, R_i)[0]
-        #print(rate_next)
-        #print('^2nd')
-    elif buf_now['current'] >= rate_plus:
-        less_buff_now= list(i[1] for i in R_i if i[1] < buf_now['current'])
-        if less_buff_now == []:
-            rate_next = rate_prev[0]
-        else: 
-            rate_next = max(less_buff_now)
-            rate_next = match(rate_next, R_i)[0]
-        #print(rate_next)
-        #print('^3rd')
-    elif buf_now['current'] <= rate_mins:
-        more_buff_now= list(i[1] for i in R_i if i[1] > buf_now['current'])
-        if more_buff_now == []:
-            rate_next = rate_prev[0]
-        else: 
-            rate_next = min(more_buff_now)
-            rate_next = match(rate_next, R_i)[0]
-        #print(rate_next)
-        #print('^4th')
-    else:
-        rate_next = rate_prev[0]
-
-        #print(rate_next)
-        #print('^last')
-    return rate_next
+    # #buffer occupany rule: 
+    if buf_time > T_rich:
+        rate_next = R_i[0][0]
+        return rate_next
+    # print(rate_next)
+    # print('^last')
+    # return R_i[len(R_i)-1][0] #nothing worked, return lowest
+    try:
+        return rate_next # return output of throughput rule
+    except UnboundLocalError:
+        return R_i[len(R_i)-1][0] #nothing worked, return lowest

@@ -51,7 +51,7 @@ def DASH(buf_time, rebuffering ,est_bandwidth, R_i , previous_bitrate, T_low=4, 
         for k in range(0, m):
             if est_bandwidth/8 >= R_i[k][1]:
                 rate_next = R_i[k][0]
-                return rate_next
+                # return rate_next
                 break
     # print(rate_next)
     # print('^1st')
@@ -84,4 +84,8 @@ def DASH(buf_time, rebuffering ,est_bandwidth, R_i , previous_bitrate, T_low=4, 
         return rate_next
     # print(rate_next)
     # print('^last')
-    return R_i[len(R_i)-1][0] #nothing worked, return lowest
+    # return R_i[len(R_i)-1][0] #nothing worked, return lowest
+    try:
+        return rate_next # return output of throughput rule
+    except UnboundLocalError:
+        return R_i[m][0] #nothing worked, return lowest
