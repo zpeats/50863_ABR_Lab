@@ -28,7 +28,7 @@ Where traceHD would give you the bandwidth trace that is suitable for HD and man
 
 ## Demo
 
-![HD Example](readmelinks\demo.gif "HD Example")
+![HD Example](https://github.com/zpeats/50863_ABR_Lab/blob/ABR/readmelinks/demo.gif "HD Example")
 
 ## References for ABR Implementations
 
