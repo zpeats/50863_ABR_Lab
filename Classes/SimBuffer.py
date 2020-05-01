@@ -17,7 +17,7 @@ class SimBuffer:
         return params
 
     def available_space(self):
-        self.buffer_relative_time()
+        #self.buffer_relative_time()
         return self.size - self.cur_size
 
     def sim_chunk_download(self, chunk_size, chunk_time, playback_time):
@@ -67,6 +67,7 @@ class SimBuffer:
 
         #all playback was simulated, return 0 buffer time
         return 0
-        #TODO: figure out actual proper conversion for buffer time
+
+    #TODO: figure out actual proper conversion for buffer time
     def buffer_relative_time(self):
         self.time = self.cur_size  *.5e-4

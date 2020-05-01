@@ -3,6 +3,8 @@ import json
 from Classes import SimBuffer, NetworkTrace, Scorecard
 import simulator_comm
 
+verbose = False
+
 
 def loadtrace(tracefile):
 
@@ -41,6 +43,12 @@ def prep_chunk(chunks_rem, manifest, chunk_num):
 
 
 if __name__ == "__main__":
+
+    #check arguments for relevant flags
+
+    if "-v" in sys.argv or "--verbose" in sys.argv:
+        verbose = True
+
 
     #Load in network trace from input file
 
@@ -131,4 +139,8 @@ if __name__ == "__main__":
 
     #cleanup and return
     simulator_comm.send_exit()
-    print('we made it to the end! debug here')
+
+    if(verbose):
+        logger.output_verbose()
+    else:
+        logger.output_results()
