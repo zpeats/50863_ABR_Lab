@@ -17,7 +17,7 @@ class SimBuffer:
         return params
 
     def available_space(self):
-        self.buffer_relative_time()
+        #self.buffer_relative_time()
         return self.size - self.cur_size
 
     def sim_chunk_download(self, chunk_size, chunk_time, playback_time):
@@ -29,7 +29,7 @@ class SimBuffer:
 
         self.chunks.append((chunk_size,chunk_time))
         self.calculate_occupancy()
-
+        self.calculate_time()
         return buffer_time
 
 
@@ -41,6 +41,7 @@ class SimBuffer:
     def burn_time(self, time):
         buffer_time = self.sim_playback(time)
         self.calculate_occupancy()
+        self.calculate_time()
         return buffer_time
 
     def sim_playback(self, playback_time):
@@ -67,6 +68,12 @@ class SimBuffer:
 
         #all playback was simulated, return 0 buffer time
         return 0
-        #TODO: figure out actual proper conversion for buffer time
-    def buffer_relative_time(self):
-        self.time = self.cur_size  *.5e-4
+
+    def calculate_time(self):
+
+        totaltime = 0
+        for chunk in self.chunks:
+            totaltime += chunk[1]
+
+        self.time = totaltime
+        return
