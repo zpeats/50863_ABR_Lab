@@ -6,7 +6,7 @@ import studentcodeEX
 ss = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 ss.bind(('localhost', 6000))
 ss.listen(10)
-
+print('Waiting for simulator')
 
 (clientsocket, address) = ss.accept()
 
