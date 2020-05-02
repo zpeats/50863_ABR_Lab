@@ -24,12 +24,12 @@ public class Main {
 
             BufferedReader dis = new BufferedReader(new InputStreamReader(client.getInputStream()));
             DataOutputStream dos = new DataOutputStream(client.getOutputStream());
-            System.out.println("server started!");
+            //System.out.println("server started!");
 
             while (true) {
                 String message = (String)dis.readLine();
 
-                System.out.println(message);
+                //System.out.println(message);
 
                 JSONParser parser = new JSONParser();
 
@@ -37,7 +37,7 @@ public class Main {
                 JSONObject simArgs = (JSONObject)obj;
 
                 if((Long)simArgs.get("exit") != 0){
-                    System.out.println("requested to exit");
+                    //System.out.println("requested to exit");
                     client.close();
                     return;
                 }
@@ -56,7 +56,7 @@ public class Main {
                 JSONObject payload = new JSONObject();
                 payload.put("bitrate", chosen_bitrate);
 
-                System.out.println(payload);
+                //System.out.println(payload);
 
                 String paystr = payload.toJSONString() + "\n";
 
