@@ -21,7 +21,7 @@ def recv_commands():
         #print(messagepart)
         message += messagepart
         if message[-1] == '\n':
-            #print(message)
+            # print(message) #comment out in master
 
             jsonargs = json.loads(messagepart)
             message = ""
