@@ -28,10 +28,11 @@ def recv_commands():
 
             if(jsonargs["exit"] != 0):
                 return
-
+            # print(jsonargs["Video Time"])
             #todo: json data sanitization
             bitrate = studentcodeEX.student_entrypoint(jsonargs["Measured Bandwidth"], jsonargs["Previous Throughput"], jsonargs["Buffer Occupancy"], jsonargs["Available Bitrates"], jsonargs["Video Time"], jsonargs["Chunk"], jsonargs["Rebuffering Time"], jsonargs["Preferred Bitrate"])
-
+            # print(bitrate) #comment out in master
+            # print()
             payload = json.dumps({"bitrate" : bitrate}) + '\n'
             clientsocket.sendall(payload.encode())
 
