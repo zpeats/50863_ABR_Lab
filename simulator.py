@@ -15,7 +15,14 @@ def loadtrace(tracefile):
 
     for line in lines:
         splitline = line.split(' ')
-        tracelog.append((float(splitline[0]), float(splitline[1])))
+        if len(splitline) > 1:
+            try:
+                tracelog.append((float(splitline[0]), float(splitline[1])))
+
+            except ValueError as e:
+                print("Your trace file is poorly formed!")
+
+
 
     trace = NetworkTrace.NetworkTrace(tracelog)
 

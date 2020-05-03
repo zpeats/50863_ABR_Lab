@@ -86,7 +86,8 @@ if __name__ == "__main__":
 
         else:
             outtext.append("Unexpected output from the simulator")
-
+            outtext.append('\n')
+            outtext.append('\n')
 
 
     with open("grade.txt", 'w', encoding='utf-8') as outfile:
