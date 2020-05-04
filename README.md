@@ -1,8 +1,27 @@
 # 50863 ABR Lab
-
+<!-- #Written by Nathan A-M =^) with the help of Zach Peats-->
 ## Computer Network System: Automatic Bitrate (ABR) Algorithm
 
 Python implementation of a video simulator that request bitrate from a ABR Algorithm
+
+## Table of content
+
+- [50863 ABR Lab](#50863-abr-lab)
+  * [Computer Network System: Automatic Bitrate (ABR) Algorithm](#computer-network-system--automatic-bitrate--abr--algorithm)
+  * [Table of content](#table-of-content)
+  * [Description](#description)
+  * [Usage](#usage)
+    + [Testing Custom Cases](#testing-custom-cases)
+      - [Demo](#demo)
+    + [Creating Cases](#creating-cases)
+      - [Trace](#trace)
+      - [Manifest](#manifest)
+    + [Grader](#grader)
+    + [Using the Java Grader](#using-the-java-grader)
+  * [Debugging](#debugging)
+    + [Verbose Demo](#verbose-demo)
+  * [Requirements](#requirements)
+  * [References for ABR Implementations](#references-for-abr-implementations)
 
 ## Description
 

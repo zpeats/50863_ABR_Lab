@@ -1,3 +1,4 @@
+#Written by Nathan A-M =^)
 import random
 
 random.seed(None)
