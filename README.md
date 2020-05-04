@@ -8,7 +8,7 @@ Python implementation of a video simulator that request bitrate from a ABR Algor
 
 - [50863 ABR Lab](#50863-abr-lab)
   - [Computer Network System: Automatic Bitrate (ABR) Algorithm](#computer-network-system-automatic-bitrate-abr-algorithm)
-  - [Table of content](#table-of-content)
+  - [Table of contents](#table-of-contents)
   - [Description](#description)
   - [Usage](#usage)
     - [Testing Custom Cases](#testing-custom-cases)
@@ -23,7 +23,6 @@ Python implementation of a video simulator that request bitrate from a ABR Algor
   - [Requirements](#requirements)
   - [File Tree](#file-tree)
   - [References for ABR Implementations](#references-for-abr-implementations)
-
 
 ## Description
 
@@ -215,7 +214,6 @@ https://github.com/fangyidong/json-simple/releases/tag/tag_release_1_1_1
 
 This class will be needed to added to your classpath, and must be in the javasrc directory in order for ```javagrader.py``` to run correctly.
 
-
 ## File Tree
 
 Below is the file tree of the repo what is in each folder/file
@@ -227,11 +225,11 @@ Below is the file tree of the repo what is in each folder/file
 │   ├───StudentCode.java //java file that contains student entrypoint
 │   └───StudentComm.java //java file containing the class to invoke their algorithm
 ├───papers //some paper references used for the ABR algorithms
-├───readmelinks //gif links for the readme.
+├───readmelinks //gif links for the README.
 ├───studentEx //implementations for various ABR algorithms done in python
 ├───tests //tests that grader will run
-│   ├───testALThard //test 
-│   ├───testALTsoft //test will a lot of alternating bandwidth
+│   ├───testALThard //test that have a unstable bandwidth that confuses ABR algos
+│   ├───testALTsoft //test that have a lot of alternating bandwidth
 │   ├───testHD //test that have high quality bandwidth and other params
 │   ├───testHDmanPQtrace //test that have high quality bandwidth but low params
 │   ├───testPQ //test that have low quality bandwidth and param, will rebuffer.
@@ -242,7 +240,7 @@ Below is the file tree of the repo what is in each folder/file
 ├───README.md //the document you're currently reading
 ├───simulator.py //the simulator that generate parameters from text and json files
 ├───studentcodeEX.py //the file where that contains the student entrypoint
-└───studentComm.py //the program the student will call to invoke thier ABR algorithm
+└───studentComm.py //the program the student will call to invoke their ABR algorithm
 ```
 
 ## References for ABR Implementations
