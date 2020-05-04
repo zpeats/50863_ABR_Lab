@@ -1,3 +1,4 @@
+#Written by Nathan A-M =^)
 from typing import Optional, List, Union
 
 class BufferOccupancy:

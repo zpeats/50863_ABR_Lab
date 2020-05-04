@@ -1,3 +1,4 @@
+#Written by Nathan A-M =^)
 import json
 from data_stru import TestInput2,BufferOccupancy
 
