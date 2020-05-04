@@ -26,7 +26,6 @@ python simulator.py inputs/traceHD.txt inputs/manifestHD.json
 
 Where traceHD would give you the bandwidth trace that is suitable for HD and manifestHD would give you the manifest with the other parameters that are suitable for HD. Using a proper ABR algorithm such as HYB would output the highest possible bitrate. Input files found in the ``` inputs/ ``` folder with PQ in their name, will give the ABR algorithm Poor Quality parameters. This will result in a lot of rebuffering and should output the lowest possible bitrate. Manifest Files ending with a P features a user preference which can be used in the ABR algorithm.
 
-
 #### Demo
 
 ![HD Example](https://github.com/zpeats/50863_ABR_Lab/blob/ABR/readmelinks/demo.gif "HD Example")
@@ -48,14 +47,55 @@ For example,
 50 5000000
 ```
 
-
-
 A tracefile always must have a value for time 0. There can be as many or as few values as needed. The last bandwidth will describe the bandwidth until the test finishes.
-
 
 #### Manifest
 
-The manifest file dictates other parameters such as chunks information, available bitrate, buffer size, and much more. ```rand_sizes.py``` can be used to quickly change chunk size information. It uses a normal distribution to randomly generate chunk sizes for a more natural test case. 
+The manifest file dictates other parameters such as chunks information, available bitrate, buffer size, and much more. ```rand_sizes.py``` can be used to quickly change chunk size information. It uses a normal distribution to randomly generate chunk sizes for a more natural test case.
+
+Here is an example configuration for a Manifest file.
+
+```json
+{
+  "Video_Time": 60,
+  "Chunk_Count": 30,
+  "Chunk_Time": 2,
+  "Buffer_Size": 4000000,
+  "Available_Bitrates": [
+    500000,
+    1000000,
+    5000000
+  ],
+  "Preferred_Bitrate": null,
+  "Chunks": {
+    "0" : [
+62966,
+125069,
+567114
+],
+
+"1" : [
+54274,
+132844,
+578807
+],
+
+"2" : [
+68388,
+116288,
+540269
+],
+.
+.
+.
+"29" : [
+62442,
+122537,
+563240
+]
+  }
+}
+```
 
 ### Grader
 
@@ -98,7 +138,7 @@ Score:1.2666149786445896e-24
 
 ## Debugging
 
-Both  ```grader.py``` and ```simulator.py``` have verbose options to view more information gathered from the simuator. It can be called via ``` -v ```
+Both  ```grader.py``` and ```simulator.py``` have verbose options to view more information gathered from the simulator. It can be called via ``` -v ```
 
 For example,
 
@@ -112,7 +152,7 @@ python grader.py -v
 
 In addition feel free to add print statements within your own code to see how the parameters are changing throughout the course of a test run.
 
-### Demo 
+### Demo
 
 ![HD Example](https://github.com/zpeats/50863_ABR_Lab/blob/ABR/readmelinks/demov.gif "HD Example")
 
