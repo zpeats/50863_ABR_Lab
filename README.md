@@ -6,7 +6,7 @@ Python implementation of a video simulator that request bitrate from a ABR Algor
 
 ## Description
 
-The objective of this project is to explore the design and implementation of different adaptive bitrate (ABR) algorithms for video streaming. The video simulator within this repository will simulate video download and playback, and continuously prompt a user-written algorithm for bitrate decisions. The entrypoint to the algorithm is ```student_entrypoint``` found in ```studentcodeEX.py```. From there, you are able to implement however you please, wether it be additional classes, preserved state, or other standard libraries. A few example implementations using various ABR algorithms were written, they can be found in ```studentEx/```. The algorithm will be then tested over a variety of different simulated network environments, and ultimately be given a final QoE score as an indicator of how well it performed from a "user point of view".
+The objective of this project is to explore the design and implementation of different adaptive bitrate (ABR) algorithms for video streaming. The video simulator within this repository will simulate video download and playback, and continuously prompt a user-written algorithm for bitrate decisions. The entrypoint to the algorithm is ```student_entrypoint``` found in ```studentcodeEX.py/StudentCode.java```. From there, you are able to implement however you please, wether it be additional classes, preserved state, or other standard libraries. A few example implementations using various ABR algorithms were written, they can be found in ```studentEx/```. The algorithm will be then tested over a variety of different simulated network environments, and ultimately be given a final QoE score as an indicator of how well it performed from a "user point of view".
 
 ## Usage
 
@@ -105,7 +105,9 @@ After writing an ABR algorithm in ``` studentcodeEX.py ```, the grader can be ra
 python grader.py
 ```
 
-The end result will output a grader.txt showing how well the ABR algorithm performed across various test cases with a score as well as other metrics. More test cases can be added by following the same file structure of ``` <test_name>/manifest.json ``` and ``` <test_name>/trace.txt ```
+The grader will look for a directory named "tests" within the current directory. Within tests should be multiple directories, each representing a testcase. The name of a testcase directory is arbitrary and will correspond to the name of the  test. Inside each testcase directory must be a manifest and trace file which will be run on the simulator.
+
+The end result will output a grader.txt showing how well the ABR algorithm performed across the various test cases with a score as well as other metrics. More test cases can be added by following the same file structure of ``` <test_name>/manifest.json ``` and ``` <test_name>/trace.txt ```
 
 ```text
 testHD:
@@ -136,6 +138,17 @@ Score:1.2666149786445896e-24
 
 ```
 
+### Using the Java Grader
+
+The Java grader is identical to the python grader, but it will attempt to compile Java code and run it. It can be invoked with
+
+```bash
+python javagrader.py
+```
+
+The Java grader will look in the current directory for a directory named ```javasrc```. It will attempt to compile every java file within the directory, then run the StudentComm class.
+
+
 ## Debugging
 
 Both  ```grader.py``` and ```simulator.py``` have verbose options to view more information gathered from the simulator. It can be called via ``` -v ```
@@ -156,7 +169,20 @@ In addition feel free to add print statements within your own code to see how th
 
 ![HD Example](https://github.com/zpeats/50863_ABR_Lab/blob/ABR/readmelinks/demov.gif "HD Example")
 
-## Information for Developers
+## Requirements
+
+Python version 3.7 was used to develop this program. 
+
+Java Runtime Environment 9 was used to develop the java code.
+
+The Java student code requires a nonstandard library: "json-simple". It can be found at
+
+```buildoutcfg
+https://github.com/fangyidong/json-simple/releases/tag/tag_release_1_1_1
+```
+
+This class will be needed to added to your classpath, and must be in the javasrc directory in order for ```javagrader.py``` to run correctly.
+
 
 ## References for ABR Implementations
 
