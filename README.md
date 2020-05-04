@@ -7,21 +7,60 @@ Python implementation of a video simulator that request bitrate from a ABR Algor
 ## Table of content
 
 - [50863 ABR Lab](#50863-abr-lab)
-  * [Computer Network System: Automatic Bitrate (ABR) Algorithm](#computer-network-system--automatic-bitrate--abr--algorithm)
-  * [Table of content](#table-of-content)
-  * [Description](#description)
-  * [Usage](#usage)
-    + [Testing Custom Cases](#testing-custom-cases)
+  - [Computer Network System: Automatic Bitrate (ABR) Algorithm](#computer-network-system-automatic-bitrate-abr-algorithm)
+  - [Table of content](#table-of-content)
+  - [File Tree](#file-tree)
+  - [Description](#description)
+  - [Usage](#usage)
+    - [Testing Custom Cases](#testing-custom-cases)
       - [Demo](#demo)
-    + [Creating Cases](#creating-cases)
+    - [Creating Cases](#creating-cases)
       - [Trace](#trace)
       - [Manifest](#manifest)
-    + [Grader](#grader)
-    + [Using the Java Grader](#using-the-java-grader)
-  * [Debugging](#debugging)
-    + [Verbose Demo](#verbose-demo)
-  * [Requirements](#requirements)
-  * [References for ABR Implementations](#references-for-abr-implementations)
+    - [Grader](#grader)
+    - [Using the Java Grader](#using-the-java-grader)
+  - [Debugging](#debugging)
+    - [Verbose Demo](#verbose-demo)
+  - [Requirements](#requirements)
+  - [References for ABR Implementations](#references-for-abr-implementations)
+
+## File Tree
+
+Below is the file tree of the repo what is in each folder/file
+
+```txt
+├───Classes //python classes used in the simulator and grader
+├───inputs //inputs files used for single use testing
+├───javasrc //files related to java implementation
+├───LabStudentService
+│   ├───.settings
+│   ├───src
+│   │   └───main
+│   │       └───java
+│   └───target
+│       ├───classes
+│       └───test-classes
+├───papers //some paper references used for the ABR algorithms
+├───readmelinks //gif links for the readme.
+├───studentEx //implementations for various ABR algorithms done in python
+├───Student_Code
+│   └───src
+├───tests //tests that grader.py goes thru
+│   ├───testALThard //test that 
+│   ├───testALTsoft //test will a lot of alternating bandwidth
+│   ├───testHD //test that have high quality bandwidth and other params
+│   ├───testHDmanPQtrace //test that have high quality bandwidth but low params
+│   └───testPQ //test that have low quality bandwidth and param, will rebuffer.
+├───grader.py //python file that graded the ABR algorithm via QOE
+├───javagrader.py //python file that grade the ABR Algorithm that written in java
+├───rand_sizes.py //python helper file use to generate chunk sizes
+├───README.md //the document you're currently reading
+├───simulator_comm.py //handles communication from the simulator end
+├───simulator.py //the simulator that generate parameters from text and json files
+├───studentcodeEX.py //the file where the student will put thier ABR algo
+└───studentComm.py //the program the student will call to invoke thier ABR algo
+```
+
 
 ## Description
 
