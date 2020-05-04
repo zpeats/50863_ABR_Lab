@@ -148,7 +148,6 @@ python javagrader.py
 
 The Java grader will look in the current directory for a directory named ```javasrc```. It will attempt to compile every java file within the directory, then run the StudentComm class.
 
-
 ## Debugging
 
 Both  ```grader.py``` and ```simulator.py``` have verbose options to view more information gathered from the simulator. It can be called via ``` -v ```
@@ -165,13 +164,13 @@ python grader.py -v
 
 In addition feel free to add print statements within your own code to see how the parameters are changing throughout the course of a test run.
 
-### Demo
+### Verbose Demo
 
 ![HD Example](https://github.com/zpeats/50863_ABR_Lab/blob/ABR/readmelinks/demov.gif "HD Example")
 
 ## Requirements
 
-Python version 3.7 was used to develop this program. 
+Python version 3.7 was used to develop this program.
 
 Java Runtime Environment 9 was used to develop the java code.
 
@@ -182,7 +181,6 @@ https://github.com/fangyidong/json-simple/releases/tag/tag_release_1_1_1
 ```
 
 This class will be needed to added to your classpath, and must be in the javasrc directory in order for ```javagrader.py``` to run correctly.
-
 
 ## References for ABR Implementations
 
