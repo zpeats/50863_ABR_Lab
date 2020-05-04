@@ -6,13 +6,13 @@ Python implementation of a video simulator that request bitrate from a ABR Algor
 
 ## Description
 
-The objective of this project is to explore the design and implementation of different adaptive bitrate (ABR) algorithms for video streaming. The video simulator within this repository will simulate video download and playback, and continuously prompt an algorithm written in ``` studentcodeEX.py ``` for bitrate decisions. A few example implementations using various ABR algorithms were written, they can be found in ```studentEx/```. The algorithm will be then tested over a variety of different simulated network environments, and ultimately be given a final QoE score as an indicator of how well it performed from a "user point of view".
+The objective of this project is to explore the design and implementation of different adaptive bitrate (ABR) algorithms for video streaming. The video simulator within this repository will simulate video download and playback, and continuously prompt a user-written algorithm for bitrate decisions. The entrypoint to the algorithm is ```student_entrypoint``` found in ```studentcodeEX.py```. From there, you are able to implement however you please, wether it be additional classes, preserved state, or other standard libraries. A few example implementations using various ABR algorithms were written, they can be found in ```studentEx/```. The algorithm will be then tested over a variety of different simulated network environments, and ultimately be given a final QoE score as an indicator of how well it performed from a "user point of view".
 
 ## Usage
 
 ### Testing Custom Cases
 
-After writing a ABR algorithm in ``` studentcodeEX.py ``` it can be test by running ``` studentComm.py ``` in one terminal window and then ``` simulator.py <tracefile.txt> <manifestfile.json> ``` in another. ``` studentComm.py ``` prepares the the ABR for incoming parameters from the simulator. Any changes to the simulator output parameter can be done by using different ``` tracefile.txt ``` and  ``` manifestfile.json ``` files.
+After writing an ABR algorithm it can be tested by running ``` studentComm.py ``` in one terminal window and then ``` simulator.py <tracefile.txt> <manifestfile.json> ``` in another. ``` studentComm.py ``` is a simple communication layer between the simulator and the student code inside of ```studentcodeEX.py```. Test conditions can be manipulated by modifying the ``` tracefile.txt ``` and  ``` manifestfile.json ``` files. Their specifications are detailed below.
 
 For example, from the main directory of this repository:
 
@@ -35,7 +35,7 @@ Where traceHD would give you the bandwidth trace that is suitable for HD and man
 
 #### Trace
 
-The trace file dictates the bandwidth and throughput estimation throughout a test run. On each line the 1st value represent the Video Time threshold where a bandwidth switch occurs and the 2nd line represent the bandwidth value it will switch too.
+The trace file dictates the bandwidth throughout a test run. On each line the 1st value represents the Video Time threshold where a bandwidth switch occurs and the 2nd value represent the bandwidth value it will switch to. The first and second value must be separated by a single space.
 
 For example,
 
@@ -48,15 +48,18 @@ For example,
 50 5000000
 ```
 
-Without an initial value stated like ``` 0 1000000 ```, the initial bandwidth will be the 1st bandwidth stated in the trace file. Also the last stated bandwidth will remain the same until the test run ends.
+
+
+A tracefile always must have a value for time 0. There can be as many or as few values as needed. The last bandwidth will describe the bandwidth until the test finishes.
+
 
 #### Manifest
 
-The manifest file dictates other parameter such as chunks information, available bitrate, buffer size. These parameter can changed manually or can be change using a helper program such as ``` rand_sizes.py ``` which can be used for chunk information.
+The manifest file dictates other parameters such as chunks information, available bitrate, buffer size, and much more. ```rand_sizes.py``` can be used to quickly change chunk size information. It uses a normal distribution to randomly generate chunk sizes for a more natural test case. 
 
 ### Grader
 
-After writing a ABR algorithm in ``` studentcodeEX.py ```, the grader can be ran.
+After writing an ABR algorithm in ``` studentcodeEX.py ```, the grader can be ran using:
 
 ```bash
 python grader.py
@@ -95,7 +98,7 @@ Score:1.2666149786445896e-24
 
 ## Debugging
 
-Verbose mode was added for both  ```grader.py``` and ```simulator.py``` to view more details of each decision per chuck, it can be called via ``` -v ```
+Both  ```grader.py``` and ```simulator.py``` have verbose options to view more information gathered from the simuator. It can be called via ``` -v ```
 
 For example,
 
@@ -107,11 +110,13 @@ python simulator.py inputs/traceHD.txt inputs/manifestHD.json -v
 python grader.py -v
 ```
 
-In addition feel free to add print statements within ```studentcodeEX.py``` to see how the parameters are changing through out the course of a test run.
+In addition feel free to add print statements within your own code to see how the parameters are changing throughout the course of a test run.
 
 ### Demo 
 
 ![HD Example](https://github.com/zpeats/50863_ABR_Lab/blob/ABR/readmelinks/demov.gif "HD Example")
+
+## Information for Developers
 
 ## References for ABR Implementations
 
