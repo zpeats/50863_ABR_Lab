@@ -46,7 +46,7 @@ Below is the file tree of the repo what is in each folder/file
 ├───Student_Code
 │   └───src
 ├───tests //tests that grader.py goes thru
-│   ├───testALThard //test that 
+│   ├───testALThard //test that
 │   ├───testALTsoft //test will a lot of alternating bandwidth
 │   ├───testHD //test that have high quality bandwidth and other params
 │   ├───testHDmanPQtrace //test that have high quality bandwidth but low params
@@ -60,7 +60,6 @@ Below is the file tree of the repo what is in each folder/file
 ├───studentcodeEX.py //the file where the student will put thier ABR algo
 └───studentComm.py //the program the student will call to invoke thier ABR algo
 ```
-
 
 ## Description
 
