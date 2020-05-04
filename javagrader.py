@@ -3,7 +3,9 @@ import subprocess
 import threading
 import sys
 
-
+#This file was written by Zach Peats
+#This program repeatedly invokes Simulator.py and StudentComm.java in order to run multiple testcases autonomously
+#For more information check out the readme
 
 
 def run_student_code():
@@ -32,6 +34,7 @@ if __name__ == "__main__":
 
     outtext = []
 
+    #iterate over all test directories
     for testdir in os.listdir('./tests/'):
 
 
@@ -40,10 +43,11 @@ if __name__ == "__main__":
         manifestpath = testpath + manifestfilename
         tracepath = testpath + tracefilename
 
+        #Run student process
         student_thread = threading.Thread(target=run_student_code)
         student_thread.start()
 
-
+        #run simulator process
         output = subprocess.run(['python', 'simulator.py', tracepath, manifestpath, verboseflag], capture_output=True )
 
         student_thread.join()
@@ -73,6 +77,7 @@ if __name__ == "__main__":
             if "switches" in line:
                 switches = float(line.split(':')[1])
 
+        #check to ensure that diagnostic scores are found
         if switches is not None and buffer_time is not None and average_bitrate is not None:
 
             buffer_penalty = pow( (1 - (.05 * buffer_ratio)), buffer_time)

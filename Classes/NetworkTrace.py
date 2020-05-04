@@ -1,5 +1,8 @@
 import math
 
+#this file was written by Zach Peats
+#A class used to simulate network traces
+
 class NetworkTrace:
 
 

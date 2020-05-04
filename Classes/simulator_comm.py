@@ -8,6 +8,7 @@ s.connect(('localhost', 6000))
 
 def send_req_json(m_band, prev_throughput, buf_occ, av_bitrates, current_time, chunk_arg, rebuff_time, pref_bitrate ):
 
+    #pack message
     req = json.dumps({"Measured Bandwidth" : m_band,
                      "Previous Throughput" : prev_throughput,
                      "Buffer Occupancy" : buf_occ,

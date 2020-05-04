@@ -1,4 +1,7 @@
 
+#this file was written by Zach Peats
+#A class that logs chunk decisions, bitrate switches, and rebuffers
+
 class Scorecard:
 
     def __init__(self, qual_coef, buf_coef, switch_coef):

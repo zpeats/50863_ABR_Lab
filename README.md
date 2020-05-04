@@ -4,7 +4,7 @@
 
 Python implementation of a video simulator that request bitrate from a ABR Algorithm
 
-## Table of content
+## Table of contents
 
 - [50863 ABR Lab](#50863-abr-lab)
   - [Computer Network System: Automatic Bitrate (ABR) Algorithm](#computer-network-system-automatic-bitrate-abr-algorithm)
@@ -24,6 +24,10 @@ Python implementation of a video simulator that request bitrate from a ABR Algor
   - [File Tree](#file-tree)
   - [References for ABR Implementations](#references-for-abr-implementations)
 
+<<<<<<< HEAD
+
+
+>>>>>>> Repo clean up, added more documentation in readme and in scripts
 ## Description
 
 The objective of this project is to explore the design and implementation of different adaptive bitrate (ABR) algorithms for video streaming. The video simulator within this repository will simulate video download and playback, and continuously prompt a user-written algorithm for bitrate decisions. The entrypoint to the algorithm is ```student_entrypoint``` found in ```studentcodeEX.py/StudentCode.java```. From there, you are able to implement however you please, wether it be additional classes, preserved state, or other standard libraries. A few example implementations using various ABR algorithms were written, they can be found in ```studentEx/```. The algorithm will be then tested over a variety of different simulated network environments, and ultimately be given a final QoE score as an indicator of how well it performed from a "user point of view".
@@ -32,7 +36,7 @@ The objective of this project is to explore the design and implementation of dif
 
 ### Testing Custom Cases
 
-After writing an ABR algorithm it can be tested by running ``` studentComm.py ``` in one terminal window and then ``` simulator.py <tracefile.txt> <manifestfile.json> ``` in another. ``` studentComm.py ``` is a simple communication layer between the simulator and the student code inside of ```studentcodeEX.py```. Test conditions can be manipulated by modifying the ``` tracefile.txt ``` and  ``` manifestfile.json ``` files. Their specifications are detailed below.
+After writing an ABR algorithm it can be tested by first running ``` studentComm.py ``` in one terminal window and then ``` simulator.py <tracefile.txt> <manifestfile.json> ``` in another. ``` studentComm.py ``` is a simple communication layer between the simulator and the student code inside of ```studentcodeEX.py```. Test conditions can be manipulated by modifying the ``` tracefile.txt ``` and  ``` manifestfile.json ``` files. Their specifications are detailed below.
 
 For example, from the main directory of this repository:
 
@@ -44,7 +48,19 @@ python studentComm.py
 python simulator.py inputs/traceHD.txt inputs/manifestHD.json
 ```
 
-Where traceHD would give you the bandwidth trace that is suitable for HD and manifestHD would give you the manifest with the other parameters that are suitable for HD. Using a proper ABR algorithm such as HYB would output the highest possible bitrate. Input files found in the ``` inputs/ ``` folder with PQ in their name, will give the ABR algorithm Poor Quality parameters. This will result in a lot of rebuffering and should output the lowest possible bitrate. Manifest Files ending with a P features a user preference which can be used in the ABR algorithm.
+To run the code using a Java algorithm, it must first be compiled using:
+
+```javac ./javasrc/*.java'```
+
+Keep in mind that json-simple-1.1.1.jar must be in your classpath for your java code to correctly compile. See the requirements section for more details.
+
+To run the compiled java code, call:
+
+```java -cp ./javasrc/json-simple-1.1.1.jar;./javasrc/ StudentComm```
+
+and then call the Python simulator as described above.
+
+Use of an IDE is recommended so that you may more efficiently run and debug your code.
 
 #### Demo
 
@@ -206,37 +222,34 @@ This class will be needed to added to your classpath, and must be in the javasrc
 
 Below is the file tree of the repo what is in each folder/file
 
+=======
+## File Tree
+
+Below is the file tree of the repo what is in each folder/file
+
 ```txt
 ├───Classes //python classes used in the simulator and grader
 ├───inputs //inputs files used for single use testing
 ├───javasrc //files related to java implementation
-├───LabStudentService
-│   ├───.settings
-│   ├───src
-│   │   └───main
-│   │       └───java
-│   └───target
-│       ├───classes
-│       └───test-classes
+│   ├───StudentCode.java //java file that contains student entrypoint
+│   └───StudentComm.java //java file containing the class to invoke their algorithm
 ├───papers //some paper references used for the ABR algorithms
 ├───readmelinks //gif links for the readme.
 ├───studentEx //implementations for various ABR algorithms done in python
-├───Student_Code
-│   └───src
-├───tests //tests that grader.py goes thru
-│   ├───testALThard //test that
+├───tests //tests that grader will run
+│   ├───testALThard //test 
 │   ├───testALTsoft //test will a lot of alternating bandwidth
 │   ├───testHD //test that have high quality bandwidth and other params
 │   ├───testHDmanPQtrace //test that have high quality bandwidth but low params
-│   └───testPQ //test that have low quality bandwidth and param, will rebuffer.
+│   ├───testPQ //test that have low quality bandwidth and param, will rebuffer.
+│   └───...
 ├───grader.py //python file that graded the ABR algorithm via QOE
 ├───javagrader.py //python file that grade the ABR Algorithm that written in java
 ├───rand_sizes.py //python helper file use to generate chunk sizes
 ├───README.md //the document you're currently reading
-├───simulator_comm.py //handles communication from the simulator end
 ├───simulator.py //the simulator that generate parameters from text and json files
-├───studentcodeEX.py //the file where the student will put thier ABR algo
-└───studentComm.py //the program the student will call to invoke thier ABR algo
+├───studentcodeEX.py //the file where that contains the student entrypoint
+└───studentComm.py //the program the student will call to invoke thier ABR algorithm
 ```
 
 ## References for ABR Implementations

@@ -18,21 +18,19 @@ def recv_commands():
     while(1):
         messagepart = clientsocket.recv(2048).decode()
 
-        #print(messagepart)
         message += messagepart
         if message[-1] == '\n':
-            # print(message) #comment out in master
+
 
             jsonargs = json.loads(messagepart)
             message = ""
 
             if(jsonargs["exit"] != 0):
                 return
-            # print(jsonargs["Video Time"])
+
             #todo: json data sanitization
             bitrate = studentcodeEX.student_entrypoint(jsonargs["Measured Bandwidth"], jsonargs["Previous Throughput"], jsonargs["Buffer Occupancy"], jsonargs["Available Bitrates"], jsonargs["Video Time"], jsonargs["Chunk"], jsonargs["Rebuffering Time"], jsonargs["Preferred Bitrate"])
-            # print(bitrate) #comment out in master
-            # print()
+
             payload = json.dumps({"bitrate" : bitrate}) + '\n'
             clientsocket.sendall(payload.encode())
 

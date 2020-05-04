@@ -1,4 +1,7 @@
 
+#this file was written by Zach Peats
+#A class that represents the video playback buffer.
+
 class SimBuffer:
 
     def __init__(self, bufsize):
