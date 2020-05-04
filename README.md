@@ -24,10 +24,7 @@ Python implementation of a video simulator that request bitrate from a ABR Algor
   - [File Tree](#file-tree)
   - [References for ABR Implementations](#references-for-abr-implementations)
 
-<<<<<<< HEAD
 
-
->>>>>>> Repo clean up, added more documentation in readme and in scripts
 ## Description
 
 The objective of this project is to explore the design and implementation of different adaptive bitrate (ABR) algorithms for video streaming. The video simulator within this repository will simulate video download and playback, and continuously prompt a user-written algorithm for bitrate decisions. The entrypoint to the algorithm is ```student_entrypoint``` found in ```studentcodeEX.py/StudentCode.java```. From there, you are able to implement however you please, wether it be additional classes, preserved state, or other standard libraries. A few example implementations using various ABR algorithms were written, they can be found in ```studentEx/```. The algorithm will be then tested over a variety of different simulated network environments, and ultimately be given a final QoE score as an indicator of how well it performed from a "user point of view".
@@ -218,11 +215,7 @@ https://github.com/fangyidong/json-simple/releases/tag/tag_release_1_1_1
 
 This class will be needed to added to your classpath, and must be in the javasrc directory in order for ```javagrader.py``` to run correctly.
 
-## File Tree
 
-Below is the file tree of the repo what is in each folder/file
-
-=======
 ## File Tree
 
 Below is the file tree of the repo what is in each folder/file
