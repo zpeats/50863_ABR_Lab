@@ -60,7 +60,7 @@ Use of an IDE is recommended so that you may more efficiently run and debug your
 
 #### Demo
 
-![HD Example](https://github.com/zpeats/50863_ABR_Lab/tree/master//visuals/readmelinks/demo.gif "HD Example")
+![HD Example](https://github.com/zpeats/50863_ABR_Lab/blob/master/visuals/readmelinks/demo.gif "HD Example")
 
 ### Creating Cases
 
@@ -198,7 +198,7 @@ In addition feel free to add print statements within your own code to see how th
 
 ### Verbose Demo
 
-![HD Example](https://github.com/zpeats/50863_ABR_Lab/tree/master/visuals/readmelinks/demov.gif "HD Example")
+![HD Example](https://github.com/zpeats/50863_ABR_Lab/blob/master/visuals/readmelinks/demov.gif "HD Example")
 
 ## Requirements
 
@@ -234,7 +234,7 @@ Below is the file tree of the repo what is in each folder/file
 │   ├───testPQ //test that have low quality bandwidth and param, will rebuffer.
 │   └───...
 ├───visuals //helpful visuals
-│   ├───flowgraphs //flowgraphs used in lab manual
+│   ├───flowcharts //flowcharts used in lab manual
 │   ├───graph //graphs ABR algos test performance used in presentation
 │   └───readmelinks //gif links for the README.
 ├───grader.py //python file that graded the ABR algorithm via QOE
