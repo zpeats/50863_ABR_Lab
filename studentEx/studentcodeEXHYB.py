@@ -22,10 +22,10 @@ def HYB(B, L, R_i,beta =.02):
     '''
 
     #Hybrid algorithms
-    m = len(R_i)-1
-    threshold = L*beta*(B/8) 
+    m = len(R_i)
+    threshold = L*beta*(B/8) #get threshold
     for k in range(m):
-        if R_i[k][1] <= threshold:
+        if R_i[k][1] <= threshold: #find reasonable value within threshold 
             rate_next = R_i[k][0]
             return rate_next
-    return R_i[len(R_i)-1][0]
+    return R_i[m-1][0]

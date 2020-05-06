@@ -1,5 +1,5 @@
 import random
-from studentEx import studentcodeEXBB
+from studentEx import studentcodeEXBB, studentcodeEXBitmovin, studentcodeEXBitmovinPQ, studentcodeEXDASH, studentcodeEXHYB, studentcodeEXHYBPQ, studentcodeEXran
 
 random.seed(None)
 
@@ -7,6 +7,3 @@ def student_entrypoint(Measured_Bandwidth, Previous_Throughput, Buffer_Occupancy
     #student can do whatever they want from here going forward
 
     return studentcodeEXBB.student_entrypoint(Measured_Bandwidth, Previous_Throughput, Buffer_Occupancy, Available_Bitrates, Video_Time, Chunk, Rebuffering_Time, Preferred_Bitrate)
-
-
-

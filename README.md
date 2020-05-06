@@ -60,7 +60,7 @@ Use of an IDE is recommended so that you may more efficiently run and debug your
 
 #### Demo
 
-![HD Example](https://github.com/zpeats/50863_ABR_Lab/blob/ABR/readmelinks/demo.gif "HD Example")
+![HD Example](https://github.com/zpeats/50863_ABR_Lab/tree/master//visuals/readmelinks/demo.gif "HD Example")
 
 ### Creating Cases
 
@@ -198,7 +198,7 @@ In addition feel free to add print statements within your own code to see how th
 
 ### Verbose Demo
 
-![HD Example](https://github.com/zpeats/50863_ABR_Lab/blob/ABR/readmelinks/demov.gif "HD Example")
+![HD Example](https://github.com/zpeats/50863_ABR_Lab/tree/master/visuals/readmelinks/demov.gif "HD Example")
 
 ## Requirements
 
@@ -225,7 +225,6 @@ Below is the file tree of the repo what is in each folder/file
 │   ├───StudentCode.java //java file that contains student entrypoint
 │   └───StudentComm.java //java file containing the class to invoke their algorithm
 ├───papers //some paper references used for the ABR algorithms
-├───readmelinks //gif links for the README.
 ├───studentEx //implementations for various ABR algorithms done in python
 ├───tests //tests that grader will run
 │   ├───testALThard //test that have a unstable bandwidth that confuses ABR algos
@@ -234,6 +233,10 @@ Below is the file tree of the repo what is in each folder/file
 │   ├───testHDmanPQtrace //test that have high quality bandwidth but low params
 │   ├───testPQ //test that have low quality bandwidth and param, will rebuffer.
 │   └───...
+├───visuals //helpful visuals
+│   ├───flowgraphs //flowgraphs used in lab manual
+│   ├───graph //graphs ABR algos test performance used in presentation
+│   └───readmelinks //gif links for the README.
 ├───grader.py //python file that graded the ABR algorithm via QOE
 ├───javagrader.py //python file that grade the ABR Algorithm that written in java
 ├───rand_sizes.py //python helper file use to generate chunk sizes

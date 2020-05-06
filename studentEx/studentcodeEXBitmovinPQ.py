@@ -1,6 +1,6 @@
 #Written by Nathan A-M =^)
 
-#Bitmovin Algorithm implementation using 
+#Bitmovin Algorithm implementation more suitable for poor quality using 
 # Practical Eval Paper as a reference 
 
 bitrate = 0 
@@ -19,12 +19,12 @@ def match(value, list_of_list):
         if value == e[1]:
             return e
 #helper function, to find the corresponding size of previous bitrate
-#if there's was no previous assume that it was the highest possible value
+#if there's was no previous assume that it was the lowest possible value
 def prevmatch(value, list_of_list): 
     for e in list_of_list:
         if value == e[1]:
             return e
-    value = max(i[1] for i in list_of_list)
+    value = min(i[1] for i in list_of_list)
     for e in list_of_list:
         if value == e[1]:
             return e
@@ -43,19 +43,19 @@ def bitmovin(time, rate_sug, rate_pref, R_i, buf_current):
     '''
     
     #Preferred Startup Switching 
-    m = len(R_i)
+    m = len(R_i) 
     s = prevmatch(rate_sug,R_i) #get suggest/previous rates
     
     p = prevmatch(rate_pref,R_i) #get preferred rates
     if time < 10: #video time therehold, can subject to change
         for k in range(m):
-            if R_i[k] == s: #suggested is better than perferred  
+            if R_i[k] == s:  #suggested is better than perferred  
                 rate_next = s[0]
                 return rate_next
             if R_i[k][1] <= p[1]:
                 rate_next = R_i[k][0]
                 return rate_next
-        rate_next = R_i[0][0] #if nothing, returns high
+        rate_next = R_i[0][0]#if nothing, returns high
         return rate_next
     else:
         #Rate based Switching

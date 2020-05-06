@@ -43,19 +43,19 @@ def DASH(buf_time, rebuffering ,est_bandwidth, R_i , previous_bitrate, T_low=4, 
     
     #throughput rule:
 
-    m = len(R_i)-1
+    m = len(R_i)
     if buf_time >= T_low*2:
         for k in range(0, m):
-            if est_bandwidth/8 >= R_i[k][1]:
+            if est_bandwidth/8 >= R_i[k][1]: #get reasonable value under bandwidth
                 rate_next = R_i[k][0]
                 break
     
     #insufficient buffer rule: 
 
-    if rebuffering != 0:
-        rate_next = R_i[m][0]
+    if rebuffering != 0: #if there's any rebuffering return lowest possible
+        rate_next = R_i[m-1][0]
         return rate_next
-    elif T_low < buf_time and buf_time < T_low *2:
+    elif T_low < buf_time and buf_time < T_low *2: # if there's buffer time work your way to a good rate
         R_min = match(min(i[1] for i in R_i),R_i)
         i=index(previous_bitrate,R_i)
         if R_min == R_i[i]:
@@ -66,10 +66,10 @@ def DASH(buf_time, rebuffering ,est_bandwidth, R_i , previous_bitrate, T_low=4, 
 
     # buffer occupancy rule: 
 
-    if buf_time > T_rich:
+    if buf_time > T_rich: #if there's a lot of buffer time return the highest possible
         rate_next = R_i[0][0]
         return rate_next
     try:
         return rate_next # return output of throughput rule
     except UnboundLocalError:
-        return R_i[m][0] #nothing worked, return lowest
+        return R_i[m-1][0] #nothing worked, return lowest

@@ -67,20 +67,20 @@ def bufferbased(rate_prev, buf_now, r, R_i , cu = 126):
             rate_mins = max(less_rate_prev)
     
     #Buffer based Algorithm 
-    if buf_now['time'] <= r:
+    if buf_now['time'] <= r: #1st check if buffer time is too small, set to R_min
         rate_next = R_min
         rate_next = match(R_min, R_i)[0]
-    elif buf_now['time'] >= (r + cu):
+    elif buf_now['time'] >= (r + cu):  #too big, set R_max
         rate_next = R_max
         rate_next = match(R_max, R_i)[0]
-    elif buf_now['current'] >= rate_plus:
+    elif buf_now['current'] >= rate_plus: #check if big enough get a different reasonable rate
         less_buff_now= list(i[1] for i in R_i if i[1] < buf_now['current'])
         if less_buff_now == []:
             rate_next = rate_prev[0]
         else: 
             rate_next = max(less_buff_now)
             rate_next = match(rate_next, R_i)[0]
-    elif buf_now['current'] <= rate_mins:
+    elif buf_now['current'] <= rate_mins: #check if small enough for a different reasonable rate
         more_buff_now= list(i[1] for i in R_i if i[1] > buf_now['current'])
         if more_buff_now == []:
             rate_next = rate_prev[0]
@@ -88,6 +88,6 @@ def bufferbased(rate_prev, buf_now, r, R_i , cu = 126):
             rate_next = min(more_buff_now)
             rate_next = match(rate_next, R_i)[0]
     else:
-        rate_next = rate_prev[0]
+        rate_next = rate_prev[0] #else give up and try again next time
 
     return rate_next
